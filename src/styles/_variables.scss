@@ -1,0 +1,97 @@
+// ---------------------------------------------------------------------------
+// Design tokens
+//
+// The structure of this file follows the Froxlor panel theme (a small set of
+// brand ramp steps feeding Bootstrap's own variables), but the palette is our
+// own. Override any of these before importing `app.scss` to re-brand the kit.
+// ---------------------------------------------------------------------------
+
+// Brand ramp
+$lia-50:  #eef4ff !default;
+$lia-100: #d9e6ff !default;
+$lia-200: #bcd3ff !default;
+$lia-300: #8eb6ff !default;
+$lia-400: #598fff !default;
+$lia-500: #3366ff !default;
+$lia-600: #1f47f5 !default;
+$lia-700: #1836e1 !default;
+$lia-800: #1a2fb6 !default;
+$lia-900: #1c2f8f !default;
+
+// Gray
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+
+// Semantic colours
+$light:     $gray-100 !default;
+$primary:   $lia-800 !default;
+$secondary: $gray-600 !default;
+$info:      $lia-900 !default;
+$warning:   #f59e0b !default;
+$danger:    #be123c !default;
+$success:   #059669 !default;
+
+// Surfaces
+$light-bg: $gray-100 !default;
+$dark-bg:  $gray-800 !default;
+
+// Typography
+$light-font-color: $gray-800 !default;
+$dark-font-color:  $gray-100 !default;
+$font-size-root:   16px !default;
+
+// Bootstrap behavioural tweaks — flat alerts and list groups read better in
+// a dense admin UI than Bootstrap's tinted defaults.
+$alert-bg-scale:    0 !default;
+$alert-color-scale: 0 !default;
+$alert-border-width: 0 !default;
+
+$list-group-item-color-scale: 0 !default;
+$list-group-item-bg-scale:    0 !default;
+
+$input-bg: mix($white, $light-bg, 50%) !default;
+
+// Spacing
+$spacer: 1.25rem !default;
+$enable-negative-margins: true !default;
+
+// Body
+$body-bg:    $light-bg !default;
+$body-color: $light-font-color !default;
+
+// Links
+$link-color: $lia-800 !default;
+
+// Navbar
+$navbar-bg:        $white !default;
+$navbar-bg-mobile: $gray-900 !default;
+
+// Sidebar
+$lia-sidebar-width: 256px !default;
+
+// Card
+$card-bg:            $white !default;
+$card-cap-bg:        none !default;
+$card-cap-padding-y: $spacer !default;
+$card-border-width:  0 !default;
+
+// Page heading bar
+$lia-heading-bg:                $navbar-bg !default;
+$lia-heading-color:             $body-color !default;
+$lia-heading-border-color:      #dee2e6 !default;
+$lia-heading-border-color-dark: rgba(0, 0, 0, 0.15) !default;
+
+// Global search
+$lia-search-bg: $navbar-bg !default;
+
+// Popovers
+$popover-max-width: 320px !default;

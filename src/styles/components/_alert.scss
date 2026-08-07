@@ -1,0 +1,18 @@
+.alert {
+  @extend .shadow-sm;
+
+  p:last-of-type { margin-bottom: 0; }
+}
+
+// Full-bleed banners docked above the navbar.
+.lia-banner {
+  border-radius: 0;
+  margin-bottom: 0;
+}
+
+.lia-toast-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1090;
+}

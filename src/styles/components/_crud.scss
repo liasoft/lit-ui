@@ -1,0 +1,121 @@
+// ---------------------------------------------------------------------------
+// CRUD family
+//
+// Everything Bootstrap already expresses stays in the markup as utilities; this
+// partial only covers the handful of things it cannot: custom-element display,
+// the chip shape, the loading veil and the sticky button bar.
+// ---------------------------------------------------------------------------
+
+lia-crud-page,
+lia-crud-form-page,
+lia-filter-bar,
+lia-table-search {
+  display: block;
+}
+
+// The chrome elements are dialogs; they must not occupy layout space of their
+// own, or an empty toolbar row gains a phantom gap.
+lia-column-manager {
+  display: contents;
+}
+
+lia-inline-edit {
+  display: inline-block;
+  max-width: 100%;
+}
+
+// --- column manager --------------------------------------------------------
+
+.lia-column-list {
+  // Two columns once there is room, so a twenty-column listing is not a
+  // scroll marathon.
+  @include media-breakpoint-up(sm) {
+    column-count: 2;
+    column-gap: 1.5rem;
+  }
+
+  .form-check {
+    break-inside: avoid;
+  }
+}
+
+// --- filter chips ----------------------------------------------------------
+
+.lia-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 400;
+  // Badges are sized for numbers; a chip carries a sentence fragment.
+  padding: 0.35em 0.7em;
+  max-width: 100%;
+}
+
+.lia-filter-chip-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lia-filter-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  opacity: 0.75;
+  vertical-align: baseline;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+  }
+}
+
+// --- listing body ----------------------------------------------------------
+
+// The veil keeps the previous page readable while the next one loads, instead
+// of collapsing the layout to a spinner and back.
+.lia-crud-dimmed {
+  opacity: 0.45;
+  pointer-events: none;
+  transition: opacity 0.15s linear;
+}
+
+.lia-crud-spinner {
+  // Sit above the dimmed table without tinting it a second time.
+  z-index: 2;
+  pointer-events: none;
+}
+
+// --- inline editing --------------------------------------------------------
+
+.lia-inline-edit-trigger {
+  border: 0;
+  max-width: 100%;
+
+  .lia-inline-edit-pen {
+    opacity: 0;
+    transition: opacity 0.1s linear;
+  }
+
+  &:hover .lia-inline-edit-pen,
+  &:focus-visible .lia-inline-edit-pen {
+    opacity: 1;
+  }
+}
+
+// Table cells are tight; a full-width input group would push the row open.
+.lia-inline-edit.input-group {
+  min-width: 12rem;
+}
+
+// --- form page -------------------------------------------------------------
+
+.lia-crud-form-buttons-sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  padding: 0.75rem 0;
+  // `body-bg` follows `data-bs-theme`, so the bar stays readable in dark mode.
+  background: var(--#{$prefix}body-bg);
+  border-top: var(--#{$prefix}border-width) solid var(--#{$prefix}border-color);
+}

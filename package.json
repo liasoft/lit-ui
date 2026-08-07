@@ -1,0 +1,66 @@
+{
+  "name": "@liasoft/lit-ui",
+  "version": "0.1.0",
+  "description": "A Bootstrap 5 web-components UI kit \u2014 app shell, navigation, dashboards, CRUD tables and a data-driven form system. Inspired by the Froxlor panel UI.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/liasoft-lit-ui.js",
+  "module": "./dist/liasoft-lit-ui.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/liasoft-lit-ui.js"
+    },
+    "./components/*": {
+      "types": "./dist/components/*/index.d.ts",
+      "import": "./dist/components/*.js"
+    },
+    "./styles.css": "./dist/liasoft-lit-ui.css",
+    "./scss/*": "./src/styles/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "./dist/liasoft-lit-ui.js",
+    "./dist/components/*.js",
+    "./dist/chunks/*.js",
+    "./src/index.ts",
+    "./src/components/**/*.ts"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run build:lib && npm run build:demo",
+    "build:lib": "vite build --mode lib && npm run build:css && tsc -p tsconfig.build.json",
+    "build:css": "sass --load-path=node_modules --style=compressed --no-source-map --quiet-deps --silence-deprecation=import,global-builtin,color-functions src/styles/bundle.scss dist/liasoft-lit-ui.css && node -e \"require('node:fs').cpSync('node_modules/@fortawesome/fontawesome-free/webfonts','dist/webfonts',{recursive:true})\"",
+    "build:demo": "vite build --mode demo",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"src/**/*.{ts,scss}\" \"demo/**/*.{ts,scss}\""
+  },
+  "dependencies": {
+    "lit": "^3.3.0"
+  },
+  "peerDependencies": {
+    "bootstrap": "^5.3.3"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "@popperjs/core": "^2.11.8",
+    "@types/bootstrap": "^5.2.10",
+    "bootstrap": "^5.3.3",
+    "chart.js": "^4.4.8",
+    "sass": "^1.85.1",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

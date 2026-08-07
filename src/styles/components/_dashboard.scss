@@ -1,0 +1,71 @@
+// ---------------------------------------------------------------------------
+// Dashboard family
+//
+// Everything that can be said with a Bootstrap utility is said there; what is
+// left are the few boxes Bootstrap has no class for.
+// ---------------------------------------------------------------------------
+
+// Custom elements are inline by default. (lia-resource-item, lia-dashboard-grid,
+// lia-info-card and lia-stat-card are already covered by _generic.scss.)
+lia-stat-row,
+lia-newsfeed,
+lia-activity-list,
+lia-chart,
+lia-widget-grid,
+lia-welcome-panel {
+  display: block;
+}
+
+// Resource meter grid ------------------------------------------------------
+// Every cell carries `border-end border-bottom`, which leaves a doubled line
+// along the last column and the last row. Pull the grid one pixel past the
+// card and let the card clip it, so the meters end flush with its edge.
+.lia-dashboard-card {
+  overflow: hidden;
+}
+
+.lia-resource-grid {
+  margin-right: -1px;
+  margin-bottom: -1px;
+}
+
+// KPI card -----------------------------------------------------------------
+// A square icon chip that keeps its size next to a wrapping label.
+.lia-stat-chip {
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.125rem;
+}
+
+// Chart --------------------------------------------------------------------
+// Chart.js sizes the canvas itself; it only needs a box with a known height.
+.lia-chart-canvas {
+  width: 100%;
+
+  > canvas {
+    display: block;
+  }
+}
+
+// Newsfeed -----------------------------------------------------------------
+// Feed teasers arrive as HTML and usually end in a trailing paragraph margin.
+.lia-newsfeed-item {
+  p:last-child,
+  ul:last-child,
+  ol:last-child {
+    margin-bottom: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+// Welcome panel ------------------------------------------------------------
+// The watermark glyph is decoration: keep it well behind the copy.
+.lia-welcome-watermark {
+  opacity: 0.25;
+  pointer-events: none;
+}

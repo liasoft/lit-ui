@@ -1,0 +1,15 @@
+// ---------------------------------------------------------------------------
+// Build entry for the distributed stylesheet (`dist/liasoft-lit-ui.css`).
+//
+// Identical to `app.scss` except that the Font Awesome webfonts are addressed
+// relative to the compiled CSS — `npm run build:css` copies them to
+// `dist/webfonts/` so the published package is self-contained.
+//
+// Compile `app.scss` instead if you are building from source with your own
+// bundler; it resolves the fonts through the `@fortawesome/fontawesome-free`
+// package so the bundler can emit them itself.
+// ---------------------------------------------------------------------------
+
+$fa-font-path: "./webfonts";
+
+@import "app";

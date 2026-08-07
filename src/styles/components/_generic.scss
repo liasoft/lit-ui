@@ -1,0 +1,78 @@
+// Custom elements are inline by default; the layout ones need to be blocks
+// or flex children before Bootstrap's utilities on them mean anything.
+lia-app-shell,
+lia-page,
+lia-dashboard-grid,
+lia-crud-page,
+lia-form-page,
+lia-settings-page {
+  display: block;
+}
+
+lia-navbar,
+lia-page-heading,
+lia-footer {
+  display: block;
+  flex-shrink: 0;
+}
+
+lia-sidebar {
+  display: contents;
+}
+
+lia-table,
+lia-form,
+lia-card,
+lia-alert,
+lia-info-card,
+lia-stat-card,
+lia-resource-item {
+  display: block;
+}
+
+.lia-header-logo {
+  height: 24px;
+}
+
+// Section title with the short accent rule underneath.
+.page-header {
+  margin-bottom: 2rem;
+
+  &::after {
+    margin-top: 0.5rem;
+    display: block;
+    height: 3px;
+    width: 100px;
+    background: $primary;
+    border-radius: 3px;
+    content: ' ';
+  }
+}
+
+.alert-icon {
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.15);
+  text-align: center;
+  border-radius: $border-radius;
+  margin-right: 0.75rem;
+}
+
+.max-w-420 { max-width: 420px; }
+.max-w-xs  { max-width: 575.98px; }
+.max-w-lg  { max-width: 991.98px; }
+
+.rounded-tl-bl { border-radius: $border-radius 0 $border-radius 0; }
+
+.progress-thin { height: 0.5rem; }
+
+.focus-none {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+a { text-decoration: none; }
+
+// Keep the page from scrolling behind the fixed navbar.
+.max-h-before-header {
+  max-height: calc(100vh - 56px);
+}

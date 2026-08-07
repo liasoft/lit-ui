@@ -1,0 +1,123 @@
+// ---------------------------------------------------------------------------
+// Form system
+//
+// The data-driven form family. `.lia-formfield` itself (the label/control row)
+// and `.lia-field-image-preview` live in `_form.scss`; everything here is
+// about how those rows sit inside the `<lia-form-field>` custom elements that
+// wrap them.
+// ---------------------------------------------------------------------------
+
+// Each row is wrapped in its own <lia-form-field> host element, so the
+// `:last-child` rule in _form.scss would strip the hairline from *every* row.
+// Re-establish it, and take it away from the last field of the card instead.
+.formfields {
+  > lia-form-field {
+    display: block;
+
+    .lia-formfield {
+      border-bottom: $border-color solid 1px;
+    }
+  }
+
+  > lia-form-field:last-child .lia-formfield {
+    border-bottom: none;
+  }
+}
+
+// A heading printed above a row (`field.priorInfotext`). It sits outside the
+// row grid, so it needs the row's own horizontal padding to line up.
+.lia-formfield-heading {
+  margin-bottom: 0;
+  padding: 1rem $spacer 0;
+}
+
+// The mandatory-field footnote under the button bar.
+.lia-form-mandatory-note {
+  font-size: $font-size-sm;
+}
+
+// Collapsible section headers: the chevron follows the state.
+.lia-form-section-toggle {
+  text-decoration: none;
+
+  .lia-form-section-chevron {
+    transition: transform 0.2s ease-in-out;
+  }
+  &[aria-expanded='false'] .lia-form-section-chevron {
+    transform: rotate(-90deg);
+  }
+}
+
+// `textul`: the "unlimited" switch lives in an input-group addon, so it must
+// not carry the checkbox's own margins.
+.input-group-text > .form-check-input {
+  margin-left: 0;
+}
+
+// A control with an async rule or a loaded option list. The wrapper is present
+// for the whole life of such a field — only the spinner inside it comes and
+// goes — so the input element is never rebuilt and the caret never jumps.
+.lia-async-field {
+  position: relative;
+
+  > .lia-async-spinner {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    width: 1rem;
+    height: 1rem;
+    margin-top: -0.5rem;
+    pointer-events: none;
+  }
+
+  // Keep the value clear of the spinner, but only while it is up.
+  &[data-lia-busy='true'] {
+    .form-control {
+      padding-right: 2.25rem;
+    }
+    .form-select {
+      padding-right: 3.75rem;
+    }
+  }
+
+  // A select already spends its right edge on the caret.
+  &.lia-async-field-select > .lia-async-spinner {
+    right: 2.25rem;
+  }
+
+  // Radio and check-box groups are a stack, not a box: pin the spinner to the
+  // first row instead of the middle of the pile.
+  &.lia-async-field-block > .lia-async-spinner {
+    top: 0.35rem;
+    right: 0.25rem;
+    margin-top: 0;
+  }
+}
+
+// Static value types keep the vertical rhythm of a real control.
+.lia-field-itemlist > p:last-child {
+  margin-bottom: 0;
+}
+
+// Placeholder reference table: a copy affordance small enough to sit inside a
+// definition term without pushing the row open.
+.lia-replacer-copy .btn {
+  --bs-btn-padding-y: 0.1rem;
+  --bs-btn-padding-x: 0.35rem;
+  --bs-btn-font-size: 0.7rem;
+  line-height: 1.2;
+}
+
+.lia-replacer-hint dt {
+  font-family: inherit;
+}
+
+@include color-mode(dark) {
+  .formfields > lia-form-field .lia-formfield {
+    border-bottom: $border-color-dark solid 1px;
+  }
+
+  .formfields > lia-form-field:last-child .lia-formfield {
+    border-bottom: none;
+  }
+}

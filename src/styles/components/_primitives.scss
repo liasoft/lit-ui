@@ -1,0 +1,63 @@
+// ---------------------------------------------------------------------------
+// primitives family
+//
+// Everything Bootstrap already expresses is left to Bootstrap. What remains is
+// (a) giving the custom elements a sensible layout box — custom elements are
+// `display: inline` until told otherwise — and (b) the two size helpers
+// Bootstrap does not ship.
+// ---------------------------------------------------------------------------
+
+// Inline controls: `inline-block` so margin/padding utilities on the host work
+// and so the host is the flex/grid item when it sits in a `d-flex` container.
+lia-button,
+lia-badge,
+lia-spinner,
+lia-copy-button {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Block-level primitives.
+lia-action-bar,
+lia-progress,
+lia-empty-state {
+  display: block;
+}
+
+// Pure decorators: no box of their own, so the wrapped markup lays out exactly
+// as it would without the wrapper.
+lia-tooltip,
+lia-popover {
+  display: contents;
+}
+
+// `lia-key-value` carries the `.list-group-item` classes on the host itself
+// (see the element docs), so Bootstrap's `.list-group > .list-group-item`
+// rules keep matching and nothing needs to be re-declared here. It only needs
+// the `display` Bootstrap would have given the item.
+lia-key-value {
+  position: relative;
+  display: block;
+}
+
+// Let a flex child shrink below its content width so `.text-truncate` works.
+.min-w-0 {
+  min-width: 0;
+}
+
+// Bootstrap only ships a `-sm` spinner modifier.
+.spinner-border-lg,
+.spinner-grow-lg {
+  width: 3rem;
+  height: 3rem;
+}
+
+.spinner-border-lg {
+  border-width: 0.3em;
+}
+
+// The copy button keeps its footprint while the tick is shown, so the
+// surrounding layout does not jump on success.
+lia-copy-button .btn {
+  min-width: 2.25rem;
+}

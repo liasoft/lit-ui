@@ -1,0 +1,14 @@
+.lia-footer {
+  @extend .small;
+
+  a {
+    @extend .text-body-secondary;
+    @extend .text-decoration-none;
+  }
+
+  // Bullet separator between imprint / terms / privacy links.
+  .lia-footer-link:not(:last-child)::after {
+    content: ' •';
+    padding: 0 0.25rem;
+  }
+}

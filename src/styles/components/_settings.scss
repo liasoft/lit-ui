@@ -1,0 +1,224 @@
+// ---------------------------------------------------------------------------
+// Settings & wizard family
+//
+// Bootstrap utilities carry nearly all of this; what is left are the boxes
+// Bootstrap has no class for — the stepper's markers and connectors, the
+// monospace configuration blocks, and the fixed table layout of a report.
+// ---------------------------------------------------------------------------
+
+// Custom elements are inline by default. `lia-settings-page` is already
+// covered by `_generic.scss`.
+lia-settings-group,
+lia-config-viewer,
+lia-config-wizard,
+lia-stepper,
+lia-wizard,
+lia-phpinfo-view,
+lia-update-panel {
+  display: block;
+}
+
+// The rail must not create a flex item of its own — the `<nav>` inside
+// `<lia-sub-sidebar>` is the item, and it owns the width. The inline variant
+// is an ordinary block.
+lia-settings-nav {
+  display: block;
+}
+
+lia-settings-nav[layout='rail'] {
+  display: contents;
+}
+
+// Settings page ------------------------------------------------------------
+
+// Anchored sections are focusable so a jump moves the reading position too;
+// that must not paint a focus ring around a whole screenful of settings.
+.lia-settings-group:focus {
+  outline: none;
+}
+
+.lia-settings-filter {
+  max-width: 32rem;
+}
+
+// The filter marks what it matched. Keep it legible in both colour modes —
+// Bootstrap's `mark` is a light-mode yellow.
+.lia-settings-main mark,
+.lia-settings-group mark {
+  padding: 0 0.1em;
+  border-radius: $border-radius-sm;
+  background-color: rgba($warning, 0.35);
+  color: inherit;
+}
+
+@include color-mode(dark) {
+  .lia-settings-main mark,
+  .lia-settings-group mark {
+    background-color: rgba($warning, 0.25);
+  }
+}
+
+// Stepper ------------------------------------------------------------------
+
+.lia-stepper-marker {
+  width: 2rem;
+  height: 2rem;
+  font-weight: 600;
+  font-size: $font-size-sm;
+}
+
+.lia-stepper-link {
+  text-decoration: none;
+
+  // The button variant is a `.btn-link`; strip the parts that make it look
+  // like a control rather than a step.
+  &.btn {
+    --bs-btn-padding-x: 1rem;
+    --bs-btn-padding-y: 1rem;
+    box-shadow: none;
+  }
+}
+
+.lia-stepper-label {
+  font-weight: 500;
+}
+
+.lia-stepper-description {
+  line-height: 1.2;
+}
+
+// The connector line between two steps: horizontal from `md` up, vertical
+// below, and never before the first step.
+.lia-stepper-step {
+  position: relative;
+
+  + .lia-stepper-step::before {
+    content: '';
+    position: absolute;
+    background-color: $border-color;
+    left: 1.9rem;
+    top: -0.25rem;
+    width: 1px;
+    height: 0.5rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .lia-stepper-step + .lia-stepper-step::before {
+    left: -0.5rem;
+    top: 2rem;
+    width: 1rem;
+    height: 1px;
+  }
+}
+
+// The step being worked on is lifted out of the row, the way a tab is.
+.lia-stepper-current > .lia-stepper-link {
+  background-color: var(--#{$prefix}body-bg);
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-sm;
+}
+
+@include color-mode(dark) {
+  .lia-stepper-step + .lia-stepper-step::before {
+    background-color: $border-color-dark;
+  }
+}
+
+// Configuration output -----------------------------------------------------
+
+.lia-config-content {
+  overflow: auto;
+  font-size: $font-size-sm;
+  background-color: var(--#{$prefix}tertiary-bg);
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  tab-size: 4;
+
+  code {
+    color: inherit;
+    white-space: pre;
+  }
+}
+
+// A path is part of the header line, not a code fragment in prose.
+.lia-config-path {
+  overflow-wrap: anywhere;
+}
+
+.lia-config-step-number {
+  min-width: 1.75rem;
+}
+
+// System report ------------------------------------------------------------
+
+// A fixed layout is what keeps a two-thousand-row report from re-flowing its
+// columns as it scrolls; long values wrap instead of stretching the table.
+.lia-report-table {
+  table-layout: fixed;
+  width: 100%;
+
+  td,
+  th {
+    overflow-wrap: anywhere;
+  }
+}
+
+.lia-report-section {
+  background-color: var(--#{$prefix}tertiary-bg);
+}
+
+// Section headings stay put while their block scrolls past.
+.lia-report-scroll .lia-report-section {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.lia-report-columns th {
+  font-size: $font-size-sm;
+  text-transform: uppercase;
+  color: var(--#{$prefix}secondary-color);
+}
+
+// An embedded report brings its own (usually terrible) table markup. Make it
+// behave like the rest of the page instead of like 2004.
+.lia-report-embed {
+  font-size: $font-size-sm;
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+
+  td,
+  th {
+    padding: 0.35rem 0.5rem;
+    border: 1px solid var(--#{$prefix}border-color);
+    overflow-wrap: anywhere;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  // Inline colours from the generator would fight the colour mode.
+  [bgcolor],
+  [color] {
+    background-color: transparent !important;
+    color: inherit !important;
+  }
+}
+
+// Update panel -------------------------------------------------------------
+
+.lia-update-command {
+  display: block;
+  overflow-x: auto;
+  border-radius: $border-radius;
+  background-color: var(--#{$prefix}tertiary-bg);
+  color: inherit;
+  white-space: pre;
+}
