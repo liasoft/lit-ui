@@ -54,6 +54,16 @@ export class LiaCard extends LiaElement {
   /** Small muted line under the title. */
   @property({ type: String }) subtitle = '';
 
+  /**
+   * Muted text at the trailing end of the header — the conditions the card's content was produced
+   * under: the aggregate applied, the bucket width, the limit that truncated it.
+   *
+   * Distinct from {@link subtitle}, which sits under the title and describes what the card *is*. This
+   * sits opposite it and describes what it is *showing right now*, which is the thing a reader needs
+   * when a control above the card decides it.
+   */
+  @property({ type: String }) note = '';
+
   /** Icon-font class string rendered before the title. */
   @property({ type: String }) icon: IconName = '';
 
@@ -93,7 +103,7 @@ export class LiaCard extends LiaElement {
   }
 
   private get hasHeader(): boolean {
-    return Boolean(this.title || this.icon || this.subtitle || this.headerActions.length);
+    return Boolean(this.title || this.icon || this.subtitle || this.note || this.headerActions.length);
   }
 
   private get hasFooter(): boolean {
@@ -120,6 +130,7 @@ export class LiaCard extends LiaElement {
           ? html`<div class="small fw-normal text-body-secondary">${this.subtitle}</div>`
           : nothing}
       </div>
+      ${this.note ? html`<span class="small text-body-secondary text-nowrap">${this.note}</span>` : nothing}
       ${this.headerActions.length
         ? html`<div class="d-flex flex-wrap align-items-center gap-1" role="group">
             ${renderActions(this.headerActions, { host: this, size: 'sm' })}

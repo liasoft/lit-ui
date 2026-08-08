@@ -38,6 +38,26 @@ export class LiaElement extends LitElement {
 }
 
 /**
+ * A component that must not be a box of its own.
+ *
+ * A custom element is `display: inline` until told otherwise, and an inline box in the middle of a
+ * layout built from flex items breaks the chain: descendants stop being flex children of the
+ * ancestor that sizes them, `min-height` no longer propagates, and a page that should have scrolled
+ * inside `<main>` scrolls the document instead. Anything that only wraps other components —
+ * an application's own view elements, a router outlet — should extend this rather than remember the
+ * rule. The kit applies the same treatment to its own wrappers (`lia-sidebar`, the projection
+ * holders).
+ *
+ * The class is styled by the kit's stylesheet, so nothing is needed beyond extending this.
+ */
+export class LiaTransparentElement extends LiaElement {
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.classList.add('lia-transparent');
+  }
+}
+
+/**
  * Same as {@link LiaElement} but keeps children the consumer wrote inside the
  * tag intact — used by components that project arbitrary markup and only need
  * to decorate their host (e.g. wrappers around Bootstrap behaviour).

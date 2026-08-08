@@ -118,6 +118,22 @@ export interface UserInfo {
   isAdmin?: boolean;
 }
 
+/** A named range offered by `<lia-time-range>`; resolving it to instants is the application's job. */
+export interface TimeRangePreset {
+  id: string;
+  label: string;
+}
+
+/** The range in force, as `<lia-time-range>` displays it. */
+export interface TimeRangeValue {
+  from?: Date;
+  to?: Date;
+  /** Id of the active preset, or null for an absolute pair. */
+  preset?: string | null;
+  /** What the button reads. Falls back to the element's `placeholder`. */
+  label?: string;
+}
+
 /** A hit in the global navbar search. */
 export interface SearchResult {
   label: string;
@@ -222,12 +238,32 @@ export interface PaginationState {
   total?: number;
 }
 
+/**
+ * What a listing needs explaining about it — column meanings, how to read the numbers, caveats.
+ *
+ * It is a dialog behind a `?` in the tab strip rather than prose above the table, because this is
+ * reference material: it is read once, and a permanent block of it pushes the data off the screen for
+ * everybody who already knows. Same reasoning as the search and column affordances beside it.
+ */
+export interface TableHelp {
+  /** Dialog heading. Defaults to the `helpTitle` label. */
+  title?: string;
+  /** Lead paragraph, above the column list. */
+  description?: string;
+  /** What each column means. `column` matches a {@link TableColumn.key}; unknown keys are ignored. */
+  columns?: { column: string; text: string }[];
+  /** Everything that is not a column: how to read the table, where the numbers come from, limits. */
+  notes?: { title?: string; text: string }[];
+}
+
 /** A complete listing definition — the input of `<lia-table>` / `<lia-crud-page>`. */
 export interface TableListing<Row = Record<string, unknown>> {
   /** Unique id; used for modal ids and column-preference storage. */
   id: string;
   columns: TableColumn<Row>[];
   rows: Row[];
+  /** Reference material behind a `?` in the tab strip. Absent hides the affordance. */
+  help?: TableHelp;
   /** Per-row action buttons rendered in a trailing column. */
   rowActions?: (row: Row) => ActionDescriptor[];
   /** Extra classes for a whole row, e.g. `deactivated`. */

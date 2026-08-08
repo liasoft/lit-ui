@@ -5,6 +5,7 @@ import type {
   ActionDescriptor,
   SortState,
   TableColumn,
+  TableHelp,
   TableListing,
   TableSearchState,
 } from '../../core/types.js';
@@ -103,6 +104,9 @@ export class LiaDataTable<Row = Record<string, unknown>> extends LiaElement {
 
   /** Rows per page. `0` (or less) shows everything on a single page. */
   @property({ type: Number, attribute: 'per-page' }) perPage = 20;
+
+  /** Reference material behind the `?` in the tab strip. Absent hides the affordance. */
+  @property({ attribute: false }) help?: TableHelp;
 
   /** Trailing per-row action buttons. */
   @property({ attribute: false }) rowActions?: (row: Row) => ActionDescriptor[];
@@ -295,6 +299,7 @@ export class LiaDataTable<Row = Record<string, unknown>> extends LiaElement {
       emptyMessage: this.emptyMessage || undefined,
       noSearch: this.noSearch,
       noColumnManager: this.noColumnManager,
+      help: this.help,
       selectable: this.selectable,
       bulkActions: this.bulkActions,
     };

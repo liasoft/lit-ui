@@ -2,6 +2,10 @@
 .lia-sub-sidebar {
   width: $lia-sidebar-width;
   z-index: 10;
+
+  // A rail is as tall as the body row, which is now the viewport; a navigation longer than that
+  // scrolls inside itself rather than being clipped by the row's `overflow-hidden`.
+  overflow-y: auto;
 }
 
 .lia-sidebar {

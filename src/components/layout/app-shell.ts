@@ -272,7 +272,7 @@ export class LiaAppShell extends LiaElement {
         ?no-shadow="${this.contentIsPage}"
       ></lia-navbar>
 
-      <div class="d-flex flex-grow-1">
+      <div class="lia-app-shell-body d-flex flex-grow-1">
         <lia-sidebar
           collapse-id="${this.sidebarId}"
           label="${this.navLabel}"

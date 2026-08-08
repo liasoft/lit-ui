@@ -17,6 +17,7 @@
 
 // Core
 export * from './core/base-element.js';
+export * from './core/data-element.js';
 export * from './core/types.js';
 export * from './core/utils.js';
 export * from './core/theme.js';

@@ -51,6 +51,13 @@ export interface TableLabels {
   columns: string;
   columnsTitle: string;
   columnsDescription: string;
+  /** Title of the help affordance in the tab strip. */
+  help: string;
+  helpTitle: string;
+  /** Heading above the per-column explanations. */
+  helpColumns: string;
+  /** Heading above the free-standing notes. */
+  helpNotes: string;
   selectAllColumns: string;
   clearColumns: string;
   resetColumns: string;
@@ -96,6 +103,10 @@ export const DEFAULT_TABLE_LABELS: Readonly<TableLabels> = Object.freeze({
   columns: 'Choose columns',
   columnsTitle: 'Choose columns',
   columnsDescription: 'Select which columns are shown in the table.',
+  help: 'About this table',
+  helpTitle: 'About this table',
+  helpColumns: 'What the columns mean',
+  helpNotes: 'Reading the table',
   selectAllColumns: 'Select all',
   clearColumns: 'Clear all',
   resetColumns: 'Reset',
@@ -284,6 +295,7 @@ export class LiaTable<Row = Record<string, unknown>> extends LiaElement {
   @state() private internalSearch?: TableSearchState;
   @state() private searchOpen = false;
   @state() private columnsOpen = false;
+  @state() private helpOpen = false;
   @state() private searchDraft: TableSearchState = { field: '', text: '' };
   @state() private columnDraft: string[] = [];
 
@@ -462,6 +474,19 @@ export class LiaTable<Row = Record<string, unknown>> extends LiaElement {
     this.columnsOpen = true;
   }
 
+  /** True once the listing has anything to explain — an empty `help` object shows no affordance. */
+  private get hasHelp(): boolean {
+    const help = this.listing.help;
+    if (!help) return false;
+    return Boolean(
+      help.description || (help.columns?.length ?? 0) > 0 || (help.notes?.length ?? 0) > 0
+    );
+  }
+
+  private openHelp(): void {
+    this.helpOpen = true;
+  }
+
   private applyColumns(columns: string[]): void {
     this.columnSelection = columns;
     this.columnsOpen = false;
@@ -484,7 +509,8 @@ export class LiaTable<Row = Record<string, unknown>> extends LiaElement {
     const filter = this.activeSearch;
     const showSearch = this.listing.noSearch !== true && this.searchableColumns.length > 0;
     const showColumns = this.listing.noColumnManager !== true && this.listing.columns.length > 1;
-    if (!showSearch && !showColumns && !filter) return nothing;
+    const showHelp = this.hasHelp;
+    if (!showSearch && !showColumns && !showHelp && !filter) return nothing;
 
     const fieldLabel = filter
       ? (this.listing.columns.find((column) => column.key === filter.field)?.label ?? '')
@@ -531,6 +557,18 @@ export class LiaTable<Row = Record<string, unknown>> extends LiaElement {
               @click=${() => this.openColumns()}
             >
               <i class="fa-solid fa-gear" aria-hidden="true"></i>
+            </button>`
+          : nothing}
+        ${showHelp
+          ? html`<button
+              type="button"
+              class="btn btn-link btn-sm p-0 lh-1 text-reset"
+              title=${text.help}
+              aria-label=${text.help}
+              aria-haspopup="dialog"
+              @click=${() => this.openHelp()}
+            >
+              <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
             </button>`
           : nothing}
       </div>
@@ -843,6 +881,64 @@ export class LiaTable<Row = Record<string, unknown>> extends LiaElement {
     ></lia-modal>`;
   }
 
+  /**
+   * The `?` dialog: what the columns mean, and how to read the table.
+   *
+   * Column explanations are matched to the listing's own columns and rendered in listing order, so
+   * the dialog reads top to bottom in the same order as the header row. An explanation for a column
+   * that does not exist is dropped rather than shown detached from anything.
+   */
+  private renderHelpDialog(): unknown {
+    if (!this.hasHelp) return nothing;
+    const text = this.text;
+    const help = this.listing.help!;
+
+    const explained = (help.columns ?? [])
+      .map((entry) => ({
+        label: this.listing.columns.find((column) => column.key === entry.column)?.label,
+        text: entry.text,
+      }))
+      .filter((entry) => entry.label !== undefined);
+
+    const content = html`
+      ${help.description ? html`<p>${help.description}</p>` : nothing}
+      ${explained.length > 0
+        ? html`<h6 class="mt-3">${text.helpColumns}</h6>
+            <dl class="row mb-0 small">
+              ${explained.map(
+                (entry) => html`<dt class="col-sm-4 text-truncate">${entry.label}</dt>
+                  <dd class="col-sm-8">${entry.text}</dd>`
+              )}
+            </dl>`
+        : nothing}
+      ${(help.notes?.length ?? 0) > 0
+        ? html`<h6 class="mt-3">${text.helpNotes}</h6>
+            ${help.notes!.map(
+              (note) => html`<p class="small mb-2">
+                ${note.title ? html`<strong>${note.title}</strong> ` : nothing}${note.text}
+              </p>`
+            )}`
+        : nothing}
+    `;
+
+    return html`<lia-modal
+      modal-id=${`${this.listingId}-help`}
+      heading=${help.title ?? text.helpTitle}
+      .open=${this.helpOpen}
+      .content=${content}
+      .footerActions=${[{ id: 'close', label: text.close, variant: 'secondary' }] satisfies ActionDescriptor[]}
+      @lia-action=${(event: CustomEvent<ActionEventDetail>) => {
+        this.stopInternal(event);
+        this.helpOpen = false;
+      }}
+      @lia-modal-hide=${(event: Event) => {
+        this.stopInternal(event);
+        this.helpOpen = false;
+      }}
+      @lia-modal-show=${(event: Event) => this.stopInternal(event)}
+    ></lia-modal>`;
+  }
+
   private renderColumnsDialog(): unknown {
     if (this.listing.noColumnManager === true) return nothing;
     const text = this.text;
@@ -944,7 +1040,7 @@ export class LiaTable<Row = Record<string, unknown>> extends LiaElement {
         : html`<div class="card position-relative">
             ${this.renderBulkBar()}${this.renderTable()}${this.renderFooter()}${this.renderOverlay()}
           </div>`}
-      ${this.renderSearchDialog()}${this.renderColumnsDialog()}${this.renderActionDialogs()}
+      ${this.renderSearchDialog()}${this.renderColumnsDialog()}${this.renderHelpDialog()}${this.renderActionDialogs()}
     `;
   }
 }

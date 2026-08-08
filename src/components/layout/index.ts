@@ -14,6 +14,7 @@
  * | `lia-footer`         | centred footer strip with legal links              |
  * | `lia-global-search`  | debounced navbar search with a results panel       |
  * | `lia-theme-toggle`   | light / dark / auto colour-scheme switcher         |
+ * | `lia-time-range`     | preset or absolute time picker for a dashboard    |
  * | `lia-breadcrumb`     | Bootstrap breadcrumb from a `NavItem[]` trail      |
  *
  * ```ts
@@ -37,4 +38,5 @@ export * from './page.js';
 export * from './footer.js';
 export * from './global-search.js';
 export * from './theme-toggle.js';
+export * from './time-range.js';
 export * from './breadcrumb.js';

@@ -8,10 +8,26 @@
 // ---------------------------------------------------------------------------
 
 // The shell owns the viewport: a column of banners, navbar and the body row.
+//
+// A definite height, not a minimum. The markup already intends `<main>` to be the scroll container
+// (it is `overflow-auto` inside an `overflow-hidden` row), but a mere `min-height` lets a tall page
+// grow the shell past the viewport, at which point the *document* scrolls instead - and the rails,
+// which are only as tall as that row, slide away with it. `dvh` so mobile browser chrome collapsing
+// does not leave a gap; `vh` first for anything that does not know `dvh`.
 lia-app-shell {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
+  height: 100dvh;
+  // Belt and braces: whatever a consumer projects, the shell is never the reason the *document*
+  // scrolls. `<main>` is the scroll container, and the rails stay put.
+  overflow: hidden;
+}
+
+// The row holding the rails and `<main>`. A flex item's automatic minimum size is its content, so
+// without this it grows to fit a tall page instead of shrinking and letting `<main>` scroll.
+.lia-app-shell-body {
+  min-height: 0;
 }
 
 // A page fills `<main>` so its content section can push the footer down.
@@ -39,8 +55,12 @@ lia-sub-sidebar {
 
 // Content projection holders — see `LightContent`. They exist purely to keep a
 // stable parent for the consumer's markup and must vanish from layout.
+//
+// `.lia-transparent` is the same rule for a consumer's own wrapper elements; see
+// `LiaTransparentElement`, which applies it.
 .lia-content-slot,
-.lia-navbar-extra {
+.lia-navbar-extra,
+.lia-transparent {
   display: contents;
 }
 
@@ -53,6 +73,14 @@ lia-global-search {
 lia-theme-toggle,
 lia-breadcrumb {
   display: block;
+}
+
+// The picker and its reload button are one control and must sit on one line. Inline is the default
+// for a custom element, and the block-level `.dropdown` inside would otherwise break the line.
+lia-time-range {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 // Wordmark shown when no logo image is configured; sized like the logo slot.
