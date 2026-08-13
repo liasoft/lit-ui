@@ -21,7 +21,6 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "baseUrl": ".",
     "paths": {
       "@liasoft/lit-ui": ["./src/index.ts"],
       "@liasoft/lit-ui/*": ["./src/*"]
