@@ -3,6 +3,15 @@
   "version": "0.1.0",
   "description": "A Bootstrap 5 web-components UI kit \u2014 app shell, navigation, dashboards, data tables and a data-driven form system.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liasoft/lit-ui.git"
+  },
+  "homepage": "https://liasoft.github.io/lit-ui/",
+  "bugs": "https://github.com/liasoft/lit-ui/issues",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "main": "./dist/liasoft-lit-ui.js",
   "module": "./dist/liasoft-lit-ui.js",
@@ -41,8 +50,7 @@
     "build:demo": "vite build --mode demo",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ext .ts",
-    "format": "prettier --write \"src/**/*.{ts,scss}\" \"demo/**/*.{ts,scss}\""
+    "prepublishOnly": "npm run build:lib"
   },
   "dependencies": {
     "lit": "^3.3.0"
