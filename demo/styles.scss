@@ -1,0 +1,155 @@
+// ---------------------------------------------------------------------------
+// Styles that belong to the *demo*, not to the kit.
+//
+// Deliberately short: if something here looks generally useful it belongs in
+// `src/styles/components/` instead. Everything below is either page furniture
+// (section headings, example cards, the source disclosure) or a mount-point
+// fix that only the demo's `index.html` needs.
+//
+// No colours are hard-coded — Bootstrap 5.3's CSS custom properties already
+// resolve per `data-bs-theme`, so light and dark come for free.
+// ---------------------------------------------------------------------------
+
+// The mount point must not become a block between `body` (a flex column) and
+// `<lia-app-shell>` (which wants to be that column's item).
+#app {
+  display: contents;
+}
+
+demo-app {
+  display: contents;
+}
+
+// Full-viewport routes: the auth screens and the "full pages" demos.
+.demo-fullscreen {
+  --demo-chrome-height: 3rem;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 100vh;
+}
+
+// The demo's own chrome on a fullscreen route. It used to float over the
+// top-right corner, which is exactly where a product screen puts its user menu,
+// its heading actions or a banner's button — so it occluded them. It is a real
+// flow item now: its own strip across the top that the screen lays out below,
+// never on top of anything.
+.demo-fullscreen-bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--demo-chrome-height);
+  padding: 0.25rem 0.75rem;
+  background-color: var(--bs-tertiary-bg);
+  border-bottom: var(--bs-border-width) solid var(--bs-border-color);
+}
+
+// The route's name beside the way back — the first thing to give up room.
+.demo-fullscreen-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// The screens below the strip are all written to fill the viewport. Give back
+// exactly what the strip took, so no route grows a second scrollbar and the
+// screens' own sticky rails keep sticking to the top of what is left.
+.demo-fullscreen > :not(.demo-fullscreen-bar) {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.demo-fullscreen lia-app-shell {
+  min-height: calc(100vh - var(--demo-chrome-height));
+}
+
+.demo-fullscreen .min-vh-100 {
+  min-height: calc(100vh - var(--demo-chrome-height)) !important;
+}
+
+// ---------------------------------------------------------------------------
+// Page furniture
+// ---------------------------------------------------------------------------
+
+// Keep prose readable while examples stay full width.
+.demo-section-lead {
+  max-width: 68ch;
+}
+
+.demo-section {
+  scroll-margin-top: 5rem;
+
+  &:last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+.demo-section-head {
+  border-bottom: var(--bs-border-width) solid var(--bs-border-color-translucent);
+  padding-bottom: 0.5rem;
+}
+
+.demo-example {
+  scroll-margin-top: 5rem;
+}
+
+// A sample that is itself a surface (a card, a table, a shell) reads better
+// without a second background behind it.
+.demo-example-body > .card:only-child {
+  margin-bottom: 0;
+}
+
+// The source disclosure. `<details>` is used on purpose: keyboard-operable and
+// findable by the browser's in-page search, with no JavaScript at all.
+.demo-example-code {
+  summary {
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: "\f105"; // fa-angle-right
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      display: inline-block;
+      width: 1em;
+      transition: transform 0.15s ease-in-out;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bs-body-color) !important;
+      background-color: var(--bs-tertiary-bg);
+    }
+  }
+
+  &[open] > summary::before {
+    transform: rotate(90deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-example-code summary::before {
+    transition: none;
+  }
+}
+
+.demo-prop-table code {
+  white-space: nowrap;
+}
+
+// ---------------------------------------------------------------------------
+// Table helpers used by the demo datasets
+// ---------------------------------------------------------------------------
+
+// A progress cell collapses to nothing in a wide table without a floor.
+.lia-col-progress {
+  min-width: 12rem;
+}

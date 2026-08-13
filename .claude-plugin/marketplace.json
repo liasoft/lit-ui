@@ -1,0 +1,14 @@
+{
+  "name": "lit-ui",
+  "owner": {
+    "name": "Sven Scharmentke",
+    "url": "https://github.com/liasoft"
+  },
+  "plugins": [
+    {
+      "name": "lit-ui",
+      "source": "./plugins/lit-ui",
+      "description": "Knowledge skills for the @liasoft/lit-ui Bootstrap 5 web-components kit: which component to use for which job, and how."
+    }
+  ]
+}

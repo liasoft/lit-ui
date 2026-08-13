@@ -1,0 +1,108 @@
+// ---------------------------------------------------------------------------
+// Layout family
+//
+// Only what Bootstrap's utilities cannot express: host-element display modes
+// (custom elements are inline by default, which breaks every flex assumption),
+// the two `display: contents` projection holders, and a handful of sizes.
+// Everything else in the family is plain Bootstrap classes.
+// ---------------------------------------------------------------------------
+
+// The shell owns the viewport: a column of banners, navbar and the body row.
+//
+// A definite height, not a minimum. The markup already intends `<main>` to be the scroll container
+// (it is `overflow-auto` inside an `overflow-hidden` row), but a mere `min-height` lets a tall page
+// grow the shell past the viewport, at which point the *document* scrolls instead - and the rails,
+// which are only as tall as that row, slide away with it. `dvh` so mobile browser chrome collapsing
+// does not leave a gap; `vh` first for anything that does not know `dvh`.
+lia-app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  // Belt and braces: whatever a consumer projects, the shell is never the reason the *document*
+  // scrolls. `<main>` is the scroll container, and the rails stay put.
+  overflow: hidden;
+}
+
+// The row holding the rails and `<main>`. A flex item's automatic minimum size is its content, so
+// without this it grows to fit a tall page instead of shrinking and letting `<main>` scroll.
+.lia-app-shell-body {
+  min-height: 0;
+}
+
+// A page fills `<main>` so its content section can push the footer down.
+lia-page {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+// The shell's content section is a column too, so a projected `<lia-page>`
+// becomes a proper flex child of it.
+.lia-app-shell-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+// Rails are wrappers around a `<nav>`; they must not create a flex item of
+// their own, otherwise the width defined in `_sidebar.scss` is ignored.
+lia-sidebar,
+lia-sub-sidebar {
+  display: contents;
+}
+
+// Content projection holders — see `LightContent`. They exist purely to keep a
+// stable parent for the consumer's markup and must vanish from layout.
+//
+// `.lia-transparent` is the same rule for a consumer's own wrapper elements; see
+// `LiaTransparentElement`, which applies it.
+.lia-content-slot,
+.lia-navbar-extra,
+.lia-transparent {
+  display: contents;
+}
+
+lia-global-search {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+lia-theme-toggle,
+lia-breadcrumb {
+  display: block;
+}
+
+// The picker and its reload button are one control and must sit on one line. Inline is the default
+// for a custom element, and the block-level `.dropdown` inside would otherwise break the line.
+lia-time-range {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+// Wordmark shown when no logo image is configured; sized like the logo slot.
+.lia-brand-label {
+  display: inline-block;
+  font-weight: 600;
+  line-height: 24px;
+  color: $white;
+}
+
+.lia-navbar-avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+  object-fit: cover;
+}
+
+.lia-footer-logo {
+  height: 20px;
+  opacity: 0.6;
+}
+
+// Lets a long heading truncate instead of shoving the action bar off-screen.
+.min-w-0 {
+  min-width: 0;
+}

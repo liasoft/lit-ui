@@ -1,0 +1,27 @@
+// A label/control pair, separated by hairlines inside a card.
+.lia-formfield {
+  padding: 1rem $spacer;
+  border-bottom: $border-color solid 1px;
+
+  &:last-child { border-bottom: none; }
+}
+
+.form-control-plaintext { outline: none; }
+
+.form-control[readonly] { background-color: $body-tertiary-bg; }
+
+.form-floating > .form-control::placeholder { color: revert; }
+.form-floating > .form-control:not(:focus)::placeholder { color: transparent; }
+
+.lia-field-image-preview { max-height: 5em; }
+
+@include color-mode(dark) {
+  .lia-formfield { border-bottom: $border-color-dark solid 1px; }
+
+  .form-control,
+  .form-select { background-color: $dark-bg; }
+
+  .form-switch .form-check-input:not(:checked):not(:focus) { background-color: $dark-bg; }
+
+  .form-control[readonly] { background-color: $body-tertiary-bg-dark; }
+}

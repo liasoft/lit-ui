@@ -1,0 +1,210 @@
+// ---------------------------------------------------------------------------
+// Editors family — specialised views: code, logs, diffs, trees, record tables.
+//
+// Everything Bootstrap can already express (spacing, colour, borders) is done
+// with utility classes on the components themselves. What is left here is the
+// handful of things utilities cannot say: monospace gutters that must not be
+// selectable, hanging indents, tree indentation guides and a sticky save bar.
+// ---------------------------------------------------------------------------
+
+// --- code block ------------------------------------------------------------
+
+.lia-code-scroll {
+	overflow: auto;
+	overscroll-behavior: contain;
+
+	&:focus-visible {
+		outline: var(--bs-focus-ring-width) solid var(--bs-focus-ring-color);
+		outline-offset: -2px;
+	}
+}
+
+.lia-code {
+	margin: 0;
+	padding: 0.5rem 0.75rem;
+	font-family: var(--bs-font-monospace);
+	font-size: 0.8125rem;
+	line-height: 1.55;
+	tab-size: 4;
+	color: var(--bs-body-color);
+	white-space: pre;
+}
+
+.lia-code-line {
+	display: block;
+	position: relative;
+	padding-inline-start: var(--lia-code-gutter, 0);
+
+	// Keep blank lines from collapsing to zero height.
+	&:empty::after {
+		content: "\a0";
+	}
+}
+
+// The gutter is a pseudo-element on purpose: line numbers must never end up in
+// the clipboard when the reader selects a range by hand.
+.lia-code-numbered .lia-code-line::before {
+	content: attr(data-line);
+	position: absolute;
+	inset-block-start: 0;
+	inset-inline-start: 0;
+	width: calc(var(--lia-code-gutter, 3rem) - 0.75rem);
+	text-align: end;
+	user-select: none;
+	-webkit-user-select: none;
+	pointer-events: none;
+	color: var(--bs-secondary-color);
+}
+
+// Wrapping keeps the hanging indent, so continuation rows stay clear of the
+// gutter instead of running under the numbers.
+.lia-code-wrap .lia-code {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.lia-code-line-mark {
+	background-color: rgba(var(--bs-warning-rgb), 0.14);
+	box-shadow: inset 0.1875rem 0 0 rgba(var(--bs-warning-rgb), 0.85);
+}
+
+.lia-code-line mark {
+	padding: 0;
+	border-radius: 0.125rem;
+	background-color: rgba(var(--bs-warning-rgb), 0.5);
+	color: inherit;
+}
+
+// --- log viewer ------------------------------------------------------------
+
+.lia-log-meta {
+	color: var(--bs-secondary-color);
+	user-select: none;
+	-webkit-user-select: none;
+}
+
+// --- diff view -------------------------------------------------------------
+
+.lia-diff-table {
+	margin: 0;
+	font-family: var(--bs-font-monospace);
+	font-size: 0.8125rem;
+	line-height: 1.55;
+
+	> :not(caption) > * > * {
+		padding: 0 0.5rem;
+		border-bottom-width: 0;
+		background-color: transparent;
+		box-shadow: none;
+	}
+}
+
+.lia-diff-num,
+.lia-diff-marker {
+	width: 1%;
+	white-space: nowrap;
+	text-align: end;
+	user-select: none;
+	-webkit-user-select: none;
+	color: var(--bs-secondary-color);
+}
+
+.lia-diff-marker {
+	text-align: center;
+}
+
+.lia-diff-text {
+	white-space: pre;
+}
+
+.lia-diff-wrap .lia-diff-text {
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+
+.lia-diff-gap {
+	background-color: var(--bs-tertiary-bg);
+	color: var(--bs-secondary-color);
+}
+
+// --- file tree -------------------------------------------------------------
+
+.lia-file-tree,
+.lia-file-tree ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.lia-file-tree ul {
+	margin-inline-start: 0.6rem;
+	padding-inline-start: 0.75rem;
+	border-inline-start: 1px solid var(--bs-border-color);
+}
+
+.lia-tree-row {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.15rem 0.35rem;
+	border-radius: var(--bs-border-radius-sm);
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--bs-tertiary-bg);
+	}
+}
+
+.lia-tree-item:focus {
+	outline: none;
+}
+
+.lia-tree-item:focus-visible > .lia-tree-row {
+	outline: var(--bs-focus-ring-width) solid var(--bs-focus-ring-color);
+	outline-offset: -1px;
+}
+
+.lia-tree-item[aria-selected="true"] > .lia-tree-row {
+	background-color: var(--bs-primary-bg-subtle);
+	color: var(--bs-emphasis-color);
+}
+
+.lia-tree-item[aria-disabled="true"] > .lia-tree-row {
+	cursor: default;
+	opacity: 0.55;
+}
+
+.lia-tree-toggle {
+	flex: 0 0 auto;
+	width: 1.1rem;
+	text-align: center;
+	color: var(--bs-secondary-color);
+}
+
+// --- record editor ---------------------------------------------------------
+
+.lia-record-editor {
+	// Inputs inside a table cell must be allowed to shrink below their
+	// intrinsic width, or the table stops being responsive.
+	.form-control,
+	.form-select {
+		min-width: 0;
+	}
+
+	> .card > .table-responsive > .table > :not(caption) > * > * {
+		padding: 0.3rem 0.4rem;
+	}
+}
+
+.lia-record-savebar {
+	position: sticky;
+	bottom: 0;
+	z-index: 2;
+}
+
+// --- credentials panel -----------------------------------------------------
+
+.lia-secret-value {
+	font-family: var(--bs-font-monospace);
+	word-break: break-all;
+}

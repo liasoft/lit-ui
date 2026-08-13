@@ -1,0 +1,52 @@
+// ---------------------------------------------------------------------------
+// Settings family
+//
+// Bootstrap utilities carry nearly all of this; what is left is the filter
+// width and the `<mark>` highlighting of a filtered settings page.
+// ---------------------------------------------------------------------------
+
+// Custom elements are inline by default. `lia-settings-page` is already
+// covered by `_generic.scss`.
+lia-settings-group {
+  display: block;
+}
+
+// The rail must not create a flex item of its own — the `<nav>` inside
+// `<lia-sub-sidebar>` is the item, and it owns the width. The inline variant
+// is an ordinary block.
+lia-settings-nav {
+  display: block;
+}
+
+lia-settings-nav[layout='rail'] {
+  display: contents;
+}
+
+// Settings page ------------------------------------------------------------
+
+// Anchored sections are focusable so a jump moves the reading position too;
+// that must not paint a focus ring around a whole screenful of settings.
+.lia-settings-group:focus {
+  outline: none;
+}
+
+.lia-settings-filter {
+  max-width: 32rem;
+}
+
+// The filter marks what it matched. Keep it legible in both colour modes —
+// Bootstrap's `mark` is a light-mode yellow.
+.lia-settings-main mark,
+.lia-settings-group mark {
+  padding: 0 0.1em;
+  border-radius: $border-radius-sm;
+  background-color: rgba($warning, 0.35);
+  color: inherit;
+}
+
+@include color-mode(dark) {
+  .lia-settings-main mark,
+  .lia-settings-group mark {
+    background-color: rgba($warning, 0.25);
+  }
+}

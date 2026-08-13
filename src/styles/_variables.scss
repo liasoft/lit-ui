@@ -1,0 +1,114 @@
+// ---------------------------------------------------------------------------
+// Design tokens
+//
+// A small set of brand ramp steps feeding Bootstrap's own variables.
+// Override any of these before importing `app.scss` to re-brand the kit.
+// ---------------------------------------------------------------------------
+
+// Brand ramp
+//
+// One accent, and the steps around it. `$lia-600` is liasoft's `#007acc`; the four the brand names -
+// accent, accent-2, accent-dark, accent-light - are steps 600, 500, 800 and 400 of this ramp, so a
+// component can reach for a neighbouring step without inventing a colour. The palette is deliberately
+// quiet - the UI is greys and white, and the accent marks *one* thing at a time.
+$lia-50:  #eaf6fd !default;
+$lia-100: #cfeaf9 !default;
+$lia-200: #a6d6f2 !default;
+$lia-300: #6fbcea !default;
+$lia-400: #3393d6 !default;  // accent-light
+$lia-500: #0098ff !default;  // accent-2
+$lia-600: #007acc !default;  // accent
+$lia-700: #0069b0 !default;
+$lia-800: #005a9e !default;  // accent-dark
+$lia-900: #024b83 !default;
+
+// Gray
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+
+// Semantic colours
+$light:     $gray-100 !default;
+// The accent itself, not a darkened step of it: `$primary` is what Bootstrap fills a button, an active
+// dropdown item and a selected nav link with, and those are the surfaces the accent is *for*.
+$primary:   $lia-600 !default;
+$secondary: $gray-600 !default;
+
+// `info` was a second, darker blue, which meant two brand-ish blues sat next to each other with no
+// difference in meaning. It is the light step of the same accent now, so an informational tint reads
+// as the same colour used more quietly rather than as another colour.
+$info:      $lia-400 !default;
+$warning:   #f59e0b !default;
+$danger:    #be123c !default;
+$success:   #059669 !default;
+
+// Surfaces
+$light-bg: $gray-100 !default;
+$dark-bg:  $gray-800 !default;
+
+// Typography
+$light-font-color: $gray-800 !default;
+$dark-font-color:  $gray-100 !default;
+$font-size-root:   16px !default;
+
+// Bootstrap behavioural tweaks — flat alerts and list groups read better in
+// a dense admin UI than Bootstrap's tinted defaults.
+$alert-bg-scale:    0 !default;
+$alert-color-scale: 0 !default;
+$alert-border-width: 0 !default;
+
+$list-group-item-color-scale: 0 !default;
+$list-group-item-bg-scale:    0 !default;
+
+$input-bg: mix($white, $light-bg, 50%) !default;
+
+// Spacing
+$spacer: 1.25rem !default;
+$enable-negative-margins: true !default;
+
+// Body
+$body-bg:    $light-bg !default;
+$body-color: $light-font-color !default;
+
+// Links
+$link-color: $lia-800 !default;
+
+// The brand's own names for the four steps above, exposed to consuming applications. A chart or a
+// bespoke surface reaches for these rather than copying a hex out of this file.
+$lia-accent:       $lia-600 !default;
+$lia-accent-2:     $lia-500 !default;
+$lia-accent-dark:  $lia-800 !default;
+$lia-accent-light: $lia-400 !default;
+
+// Navbar
+$navbar-bg:        $white !default;
+$navbar-bg-mobile: $gray-900 !default;
+
+// Sidebar
+$lia-sidebar-width: 256px !default;
+
+// Card
+$card-bg:            $white !default;
+$card-cap-bg:        none !default;
+$card-cap-padding-y: $spacer !default;
+$card-border-width:  0 !default;
+
+// Page heading bar
+$lia-heading-bg:                $navbar-bg !default;
+$lia-heading-color:             $body-color !default;
+$lia-heading-border-color:      #dee2e6 !default;
+$lia-heading-border-color-dark: rgba(0, 0, 0, 0.15) !default;
+
+// Global search
+$lia-search-bg: $navbar-bg !default;
+
+// Popovers
+$popover-max-width: 320px !default;

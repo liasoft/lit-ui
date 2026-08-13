@@ -1,0 +1,17 @@
+// The sticky title bar between the navbar and the page content.
+.lia-heading {
+  color: $lia-heading-color;
+  background-color: $lia-heading-bg;
+  border-top: $lia-heading-border-color solid 1px;
+
+  h5 { color: $lia-heading-color; }
+}
+
+@include color-mode(dark) {
+  .lia-heading {
+    background: $dark-bg;
+    border-top: $lia-heading-border-color-dark solid 1px;
+
+    h5 { color: $body-color-dark; }
+  }
+}

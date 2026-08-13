@@ -1,0 +1,184 @@
+// ---------------------------------------------------------------------------
+// Feedback family
+//
+// Bootstrap carries almost all of the look here; this partial only adds what
+// utilities cannot express: host display modes, the icon chip's dark-mode
+// treatment, code blocks inside hints and the toast-container placements.
+// `.lia-banner` and the base `.lia-toast-container` live in `_alert.scss`.
+// ---------------------------------------------------------------------------
+
+// Custom elements are inline by default. The ones that occupy layout space
+// need to be blocks; the ones that only render fixed-position UI stay out of
+// the flow entirely so they never add a stray line box.
+lia-alert-stack,
+lia-banner,
+lia-hint,
+lia-error-boundary,
+lia-toast {
+  display: block;
+}
+
+lia-modal,
+lia-confirm-dialog,
+lia-toast-container {
+  display: contents;
+}
+
+// --- Alerts ---------------------------------------------------------------
+
+// The icon chip is a translucent square punched out of the alert's own colour,
+// so it keeps working for every contextual variant without a hardcoded value.
+.alert-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+@include color-mode(dark) {
+  .alert .alert-icon {
+    background: rgba($white, 0.12);
+  }
+}
+
+// Trailing paragraphs inside an alert body must not push the box open.
+.lia-alert-body > :last-child {
+  margin-bottom: 0;
+}
+
+.lia-alert-details {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 0;
+}
+
+// --- Hints ----------------------------------------------------------------
+
+.lia-hint {
+  .lia-hint-heading:last-child {
+    margin-bottom: 0;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: 0;
+  }
+}
+
+// The chip on a hint uses a Bootstrap subtle background instead of the alert's
+// punch-out, so reset the inherited tint (utilities are !important and win on
+// `background`, but the padding/rounding from `.alert-icon` is what we want).
+.lia-hint-icon {
+  background: transparent;
+}
+
+.lia-hint-steps {
+  padding-left: 1.25rem;
+
+  > li:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.lia-hint-disclosure > summary {
+  cursor: pointer;
+}
+
+// Keep a page-level hint readable on short viewports.
+.lia-hint-page {
+  width: 100%;
+}
+
+// --- Toasts ---------------------------------------------------------------
+
+// The container itself must not swallow clicks meant for the page behind it.
+.lia-toast-container {
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+
+  // Bootstrap spaces `.toast-container > :not(:last-child)`, which already
+  // matches our `<lia-toast>` hosts — nothing to add there.
+
+  &.lia-toast-top-start {
+    top: 1rem;
+    bottom: auto;
+    left: 1rem;
+    right: auto;
+    transform: none;
+  }
+
+  &.lia-toast-top-center {
+    top: 1rem;
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  &.lia-toast-top-end {
+    top: 1rem;
+    bottom: auto;
+    left: auto;
+    right: 1rem;
+    transform: none;
+  }
+
+  &.lia-toast-middle-start {
+    top: 50%;
+    bottom: auto;
+    left: 1rem;
+    right: auto;
+    transform: translateY(-50%);
+  }
+
+  &.lia-toast-middle-center {
+    top: 50%;
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  &.lia-toast-middle-end {
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    right: 1rem;
+    transform: translateY(-50%);
+  }
+
+  &.lia-toast-bottom-start {
+    top: auto;
+    bottom: 1rem;
+    left: 1rem;
+    right: auto;
+    transform: none;
+  }
+
+  &.lia-toast-bottom-center {
+    top: auto;
+    bottom: 1rem;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+
+  &.lia-toast-bottom-end {
+    top: auto;
+    bottom: 1rem;
+    left: auto;
+    right: 1rem;
+    transform: none;
+  }
+}
+
+// Toasts sit on a solid contextual surface, so the header must not paint its
+// own translucent strip over it.
+.lia-toast > .toast-header {
+  background-color: transparent;
+}

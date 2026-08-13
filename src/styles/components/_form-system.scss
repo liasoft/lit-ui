@@ -1,0 +1,209 @@
+// ---------------------------------------------------------------------------
+// Form system
+//
+// The data-driven form family. `.lia-formfield` itself (the label/control row)
+// and `.lia-field-image-preview` live in `_form.scss`; everything here is
+// about how those rows sit inside the `<lia-form-field>` custom elements that
+// wrap them.
+// ---------------------------------------------------------------------------
+
+// Each row is wrapped in its own <lia-form-field> host element, so the
+// `:last-child` rule in _form.scss would strip the hairline from *every* row.
+// Re-establish it, and take it away from the last field of the card instead.
+.formfields {
+  > lia-form-field {
+    display: block;
+
+    .lia-formfield {
+      border-bottom: $border-color solid 1px;
+    }
+  }
+
+  > lia-form-field:last-child .lia-formfield {
+    border-bottom: none;
+  }
+}
+
+// A heading printed above a row (`field.priorInfotext`). It sits outside the
+// row grid, so it needs the row's own horizontal padding to line up.
+.lia-formfield-heading {
+  margin-bottom: 0;
+  padding: 1rem $spacer 0;
+}
+
+// The mandatory-field footnote under the button bar.
+.lia-form-mandatory-note {
+  font-size: $font-size-sm;
+}
+
+// Collapsible section headers: the chevron follows the state.
+.lia-form-section-toggle {
+  text-decoration: none;
+
+  .lia-form-section-chevron {
+    transition: transform 0.2s ease-in-out;
+  }
+  &[aria-expanded='false'] .lia-form-section-chevron {
+    transform: rotate(-90deg);
+  }
+}
+
+// `textul`: the "unlimited" switch lives in an input-group addon, so it must
+// not carry the checkbox's own margins.
+.input-group-text > .form-check-input {
+  margin-left: 0;
+}
+
+// A control with an async rule or a loaded option list. The wrapper is present
+// for the whole life of such a field — only the spinner inside it comes and
+// goes — so the input element is never rebuilt and the caret never jumps.
+.lia-async-field {
+  position: relative;
+
+  > .lia-async-spinner {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    width: 1rem;
+    height: 1rem;
+    margin-top: -0.5rem;
+    pointer-events: none;
+  }
+
+  // Keep the value clear of the spinner, but only while it is up.
+  &[data-lia-busy='true'] {
+    .form-control {
+      padding-right: 2.25rem;
+    }
+    .form-select {
+      padding-right: 3.75rem;
+    }
+  }
+
+  // A select already spends its right edge on the caret.
+  &.lia-async-field-select > .lia-async-spinner {
+    right: 2.25rem;
+  }
+
+  // Radio and check-box groups are a stack, not a box: pin the spinner to the
+  // first row instead of the middle of the pile.
+  &.lia-async-field-block > .lia-async-spinner {
+    top: 0.35rem;
+    right: 0.25rem;
+    margin-top: 0;
+  }
+}
+
+// Static value types keep the vertical rhythm of a real control.
+.lia-field-itemlist > p:last-child {
+  margin-bottom: 0;
+}
+
+// Inline editing -----------------------------------------------------------
+
+lia-inline-edit {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.lia-inline-edit-trigger {
+  border: 0;
+  max-width: 100%;
+
+  .lia-inline-edit-pen {
+    opacity: 0;
+    transition: opacity 0.1s linear;
+  }
+
+  &:hover .lia-inline-edit-pen,
+  &:focus-visible .lia-inline-edit-pen {
+    opacity: 1;
+  }
+}
+
+// Table cells are tight; a full-width input group would push the row open.
+.lia-inline-edit.input-group {
+  min-width: 12rem;
+}
+
+// Stepper ------------------------------------------------------------------
+
+lia-stepper,
+lia-wizard {
+  display: block;
+}
+
+.lia-stepper-marker {
+  width: 2rem;
+  height: 2rem;
+  font-weight: 600;
+  font-size: $font-size-sm;
+}
+
+.lia-stepper-link {
+  text-decoration: none;
+
+  // The button variant is a `.btn-link`; strip the parts that make it look
+  // like a control rather than a step.
+  &.btn {
+    --bs-btn-padding-x: 1rem;
+    --bs-btn-padding-y: 1rem;
+    box-shadow: none;
+  }
+}
+
+.lia-stepper-label {
+  font-weight: 500;
+}
+
+.lia-stepper-description {
+  line-height: 1.2;
+}
+
+// The connector line between two steps: horizontal from `md` up, vertical
+// below, and never before the first step.
+.lia-stepper-step {
+  position: relative;
+
+  + .lia-stepper-step::before {
+    content: '';
+    position: absolute;
+    background-color: $border-color;
+    left: 1.9rem;
+    top: -0.25rem;
+    width: 1px;
+    height: 0.5rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .lia-stepper-step + .lia-stepper-step::before {
+    left: -0.5rem;
+    top: 2rem;
+    width: 1rem;
+    height: 1px;
+  }
+}
+
+// The step being worked on is lifted out of the row, the way a tab is.
+.lia-stepper-current > .lia-stepper-link {
+  background-color: var(--#{$prefix}body-bg);
+  border-radius: $border-radius;
+  box-shadow: $box-shadow-sm;
+}
+
+@include color-mode(dark) {
+  .lia-stepper-step + .lia-stepper-step::before {
+    background-color: $border-color-dark;
+  }
+}
+
+@include color-mode(dark) {
+  .formfields > lia-form-field .lia-formfield {
+    border-bottom: $border-color-dark solid 1px;
+  }
+
+  .formfields > lia-form-field:last-child .lia-formfield {
+    border-bottom: none;
+  }
+}

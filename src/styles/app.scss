@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+// ---------------------------------------------------------------------------
+// @liasoft/lit-ui — the single stylesheet the kit needs.
+//
+//   import '@liasoft/lit-ui/styles.css';           // pre-built
+//   @use '@liasoft/lit-ui/scss/app';               // or compile with your own tokens
+//
+// Components render into the light DOM, so this sheet must be loaded once
+// globally rather than per component.
+// ---------------------------------------------------------------------------
+
+// 1. Tokens (override these before importing to re-brand)
+@import "variables";
+
+// 2. Bootstrap
+@import "bootstrap/scss/bootstrap";
+
+// 3. Icon font
+//
+// The webfont files are resolved through the package itself rather than
+// Font Awesome's default `../webfonts`, which is relative to wherever the
+// compiled CSS happens to land. A bundler can follow this specifier and emit
+// the font files; plain `sass` users should override `$fa-font-path` with a
+// path that is correct for their output directory.
+$fa-font-path: "@fortawesome/fontawesome-free/webfonts" !default;
+
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/regular";
+@import "@fortawesome/fontawesome-free/scss/brands";
+
+// 4. Kit components — one partial per component family
+@import "components/generic";
+@import "components/alert";
+@import "components/card";
+@import "components/dropdown";
+@import "components/footer";
+@import "components/form";
+@import "components/heading";
+@import "components/navbar";
+@import "components/sidebar";
+@import "components/search";
+
+@import "components/layout";
+@import "components/primitives";
+@import "components/feedback";
+@import "components/table";
+@import "components/form-system";
+@import "components/dashboard";
+@import "components/settings";
+@import "components/auth";
+@import "components/editor";

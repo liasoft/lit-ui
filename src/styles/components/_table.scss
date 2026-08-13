@@ -1,0 +1,137 @@
+// ---------------------------------------------------------------------------
+// Table family
+//
+// Bootstrap's `.table`, `.pagination` and `.card` do almost all of the work.
+// What is left is the little rounded tab that hangs above the card, the busy
+// overlay, and a handful of rules that keep a dense listing readable.
+// ---------------------------------------------------------------------------
+
+lia-data-table,
+lia-pagination {
+  display: block;
+}
+
+// --- The tab above the card ------------------------------------------------
+
+// A subtle surface with the normal secondary text colour stays legible in
+// both themes and picks up `data-bs-theme` on its own.
+.lia-table-tools {
+  border: 1px solid var(--#{$prefix}border-color);
+  border-bottom: 0;
+  border-top-left-radius: var(--#{$prefix}border-radius);
+  border-top-right-radius: var(--#{$prefix}border-radius);
+  background-color: var(--#{$prefix}tertiary-bg);
+  color: var(--#{$prefix}secondary-color);
+
+  // Icon triggers sit flush in the strip; give them a real hit area without
+  // changing the strip's height.
+  .btn-link {
+    min-width: 1.5rem;
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--#{$prefix}emphasis-color);
+    }
+  }
+}
+
+// --- Header ----------------------------------------------------------------
+
+// A sortable header is a button, so it must not inherit the link colour or the
+// underline — it should look exactly like the static headers beside it.
+.lia-table-sort {
+  --#{$prefix}btn-color: inherit;
+  --#{$prefix}btn-hover-color: inherit;
+  white-space: nowrap;
+
+  &:hover .fa-sort {
+    opacity: 1;
+  }
+}
+
+// Bootstrap paints a background on `thead` cells; in dark mode that lands on
+// top of the card surface as a lighter band.
+@include color-mode(dark) {
+  .table > thead > * > * {
+    background-color: transparent;
+  }
+}
+
+@include color-mode(light) {
+  .table {
+    --#{$prefix}table-bg: #{$white};
+  }
+}
+
+// --- Rows ------------------------------------------------------------------
+
+// The selection column carries a single checkbox: keep it as narrow as the
+// control and never let it wrap.
+.lia-table-select {
+  width: 1px;
+  white-space: nowrap;
+}
+
+// Row action buttons sit in a trailing `text-end` cell; a hair of separation
+// keeps them from reading as one long control.
+td.text-end {
+  .btn-sm:not(:last-child) {
+    margin-right: 0.125rem;
+  }
+}
+
+// A muted row treatment listings can opt into via `rowClass`.
+tr.deactivated {
+  color: var(--#{$prefix}secondary-color);
+
+  i {
+    color: var(--#{$prefix}secondary-color);
+  }
+}
+
+// --- Busy overlay ----------------------------------------------------------
+
+// Dims the current page of rows while the next one is being fetched, so the
+// table keeps its height and the layout does not jump.
+.lia-table-loading {
+  z-index: 2;
+  background-color: rgba($white, 0.6);
+  border-radius: inherit;
+}
+
+@include color-mode(dark) {
+  .lia-table-loading {
+    background-color: rgba($black, 0.5);
+  }
+}
+
+// --- Cells -----------------------------------------------------------------
+
+// Long identifiers must be able to break rather than force a horizontal
+// scrollbar on the whole listing.
+.lia-cell-domain {
+  word-break: break-word;
+}
+
+// --- Row detail ------------------------------------------------------------
+
+// The expanded region under a row is an annotation on that row, not a row of
+// the result, and Bootstrap's `table-striped` stripes `tr:nth-of-type(odd)` —
+// so an extra `tr` in the flow puts every stripe below an open row out of
+// phase. Neutralising the stripe on the detail row alone would not fix that:
+// the rows *after* it would still alternate from the wrong parity.
+//
+// So a table whose listing declares `rowDetail` drops `table-striped` entirely
+// and `lia-table` stripes its data rows by index instead, which counts what a
+// reader counts. Tables without expansion are untouched and keep Bootstrap's.
+.lia-table-stripe > td {
+  background-color: var(--bs-table-striped-bg);
+}
+
+// The region reads as part of its row rather than as a band of its own: no
+// stripe, a quieter surface, and no border between it and the row it explains.
+.lia-table-detail > td {
+  background-color: var(--bs-tertiary-bg);
+  border-top: 0;
+}

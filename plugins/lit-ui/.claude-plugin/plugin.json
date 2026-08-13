@@ -1,0 +1,12 @@
+{
+  "name": "lit-ui",
+  "displayName": "lit-ui",
+  "description": "Teaches Claude the @liasoft/lit-ui component kit: an overview skill maps use cases to families, and one skill per family covers its components, properties, events and patterns.",
+  "author": {
+    "name": "Sven Scharmentke"
+  },
+  "homepage": "https://github.com/liasoft/lit-ui",
+  "repository": "https://github.com/liasoft/lit-ui",
+  "license": "MIT",
+  "keywords": ["lit", "web-components", "bootstrap", "ui-kit", "admin"]
+}

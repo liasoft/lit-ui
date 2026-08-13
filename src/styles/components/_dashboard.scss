@@ -1,0 +1,42 @@
+// ---------------------------------------------------------------------------
+// Dashboard family
+//
+// Everything that can be said with a Bootstrap utility is said there; what is
+// left are the few boxes Bootstrap has no class for.
+// ---------------------------------------------------------------------------
+
+// Custom elements are inline by default. (lia-info-card and lia-stat-card are
+// already covered by _generic.scss.)
+lia-stat-row,
+lia-activity-list,
+lia-chart,
+lia-widget-grid {
+  display: block;
+}
+
+// KPI card -----------------------------------------------------------------
+// A square icon chip that keeps its size next to a wrapping label.
+.lia-stat-chip {
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  font-size: 1.125rem;
+}
+
+// The quiet chip, and the default one: a card says nothing with its colour unless it has something to
+// say. Tinting every card in a row uses up the palette on decoration and leaves the one card that is
+// actually about a colour - full, failing - with no way left to stand out.
+.lia-stat-chip-off {
+  background: var(--bs-tertiary-bg);
+  color: var(--bs-secondary-color);
+}
+
+// Chart --------------------------------------------------------------------
+// Chart.js sizes the canvas itself; it only needs a box with a known height.
+.lia-chart-canvas {
+  width: 100%;
+
+  > canvas {
+    display: block;
+  }
+}
