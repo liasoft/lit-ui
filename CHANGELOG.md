@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/liasoft/lit-ui/compare/v0.1.0...v0.1.1) (2026-08-13)
+
+
+### Bug Fixes
+
+* **deps:** bump the npm-dependencies group with 3 updates ([#4](https://github.com/liasoft/lit-ui/issues/4)) ([1d984ed](https://github.com/liasoft/lit-ui/commit/1d984ed2ee4bf739e2da18304c6d8c554c0f9357))
+
 ## 0.1.0 (2026-08-13)
 
 
