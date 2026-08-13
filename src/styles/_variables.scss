@@ -68,6 +68,20 @@ $lia-dark-800: #252526 !default; // raised: cards, navbar, heading bar
 $lia-dark-700: #303031 !default; // floating: dropdowns, popovers, hover
 $dark-bg: $lia-dark-800 !default;
 
+// The semantic palette, re-pigmented for charcoal. The light values are deep
+// colours for white paper; on charcoal they either sink (danger at 2.4:1) or
+// scream (warning). These are the same five meanings lifted to one consistent
+// weight, so a row of badges carries evenly the way it does in light mode.
+// Info takes a visibly lighter step of the accent than primary — on white,
+// luminance separates the two blues; here it has to be the pigment itself.
+$lia-dark-primary:   #379fe0 !default;
+$lia-dark-info:      $lia-300 !default;
+$lia-dark-success:   #4cb894 !default;
+$lia-dark-warning:   #d9a441 !default;
+$lia-dark-danger:    #e37489 !default;
+$lia-dark-secondary: #9b9b9b !default; // strictly neutral, like the ladder
+$lia-dark-ink:       #16181a !default; // text on the lifted fills above
+
 // Bootstrap's own dark-mode tokens, fed from the same ladder so every
 // component Bootstrap colours itself (tables, forms, dropdowns, modals)
 // lands on it too.
@@ -76,11 +90,48 @@ $body-color-dark:           #cccccc !default;
 $body-secondary-bg-dark:    $lia-dark-700 !default;
 $body-secondary-color-dark: #9d9d9d !default;
 $body-tertiary-bg-dark:     $lia-dark-850 !default;
-$body-tertiary-color-dark:  #6f6f6f !default;
-$border-color-dark:         #2b2b2b !default;
-$border-color-translucent-dark: rgba($white, 0.08) !default;
+$body-tertiary-color-dark:  #757575 !default;
+$border-color-dark:         #3a3a3a !default;
+$border-color-translucent-dark: rgba($white, 0.12) !default;
 $headings-color-dark:       #e5e5e5 !default;
 $link-color-dark:           $lia-300 !default;
+$code-color-dark:           #c98bb9 !default;
+
+// Emphasis text: legible on every ladder step, and ordered by severity —
+// danger must outrank warning, which the stock tints inverted.
+$primary-text-emphasis-dark:   $lia-300 !default;
+$info-text-emphasis-dark:      #9ed3f5 !default;
+$success-text-emphasis-dark:   #7fd3b4 !default;
+$warning-text-emphasis-dark:   #d9b25f !default;
+$danger-text-emphasis-dark:    #f2a4b5 !default;
+$secondary-text-emphasis-dark: #b5b5b5 !default;
+$light-text-emphasis-dark:     #e5e5e5 !default;
+$dark-text-emphasis-dark:     #cccccc !default;
+
+// Subtle surfaces: the hue whispered into the elevated neutral, so an alert
+// still rises off the page the way it does in light mode — Bootstrap's
+// defaults shade the hue into pure black, which sinks them below it.
+$primary-bg-subtle-dark:   mix($lia-dark-primary, $lia-dark-700, 16%) !default;
+$info-bg-subtle-dark:      mix($lia-dark-info, $lia-dark-700, 16%) !default;
+$success-bg-subtle-dark:   mix($lia-dark-success, $lia-dark-700, 13%) !default;
+// Amber mixed into warm neutral drifts olive; a lighter hand keeps it in the
+// cool family the other tints live in.
+$warning-bg-subtle-dark:   mix($lia-dark-warning, $lia-dark-700, 12%) !default;
+$danger-bg-subtle-dark:    mix($lia-dark-danger, $lia-dark-700, 16%) !default;
+$secondary-bg-subtle-dark: $lia-dark-700 !default;
+$light-bg-subtle-dark:     $lia-dark-700 !default;
+$dark-bg-subtle-dark:      $lia-dark-900 !default;
+
+$primary-border-subtle-dark:   mix($lia-dark-primary, $lia-dark-700, 40%) !default;
+$info-border-subtle-dark:      mix($lia-dark-info, $lia-dark-700, 40%) !default;
+$success-border-subtle-dark:   mix($lia-dark-success, $lia-dark-700, 40%) !default;
+$warning-border-subtle-dark:   mix($lia-dark-warning, $lia-dark-700, 40%) !default;
+$danger-border-subtle-dark:    mix($lia-dark-danger, $lia-dark-700, 40%) !default;
+$secondary-border-subtle-dark: #3a3a3a !default;
+$light-border-subtle-dark:     #3a3a3a !default;
+$dark-border-subtle-dark:      #2b2b2b !default;
+
+$mark-bg-dark: mix($lia-dark-warning, $lia-dark-700, 35%) !default;
 
 // Typography
 $light-font-color: $gray-800 !default;

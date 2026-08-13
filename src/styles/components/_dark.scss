@@ -1,0 +1,206 @@
+// ---------------------------------------------------------------------------
+// The dark chromatic layer.
+//
+// Bootstrap re-derives the *-text-emphasis / *-bg-subtle / *-border-subtle
+// families per theme, but everything compiled from $theme-colors — the
+// `--bs-<state>` variables behind `.text-*` / `.bg-*`, the `.btn-*` variants,
+// the `.text-bg-*` badges — keeps its light-theme value in both modes. This
+// file re-points all of it at the `$lia-dark-*` semantic set, so dark mode
+// carries the same meanings at the same visual weight as light mode.
+//
+// Deliberately untouched: `--bs-dark`/`--bs-light` at the root (the sidebar's
+// `.bg-dark` and its `.text-light` links depend on them) and the filled
+// `.btn-primary`, which keeps the brand accent in both themes.
+// ---------------------------------------------------------------------------
+
+@include color-mode(dark) {
+  // Semantic utilities: .text-*, .bg-*, .link-*, progress fills.
+  --bs-primary: #{$lia-dark-primary};
+  --bs-primary-rgb: #{to-rgb($lia-dark-primary)};
+  --bs-secondary: #{$lia-dark-secondary};
+  --bs-secondary-rgb: #{to-rgb($lia-dark-secondary)};
+  --bs-success: #{$lia-dark-success};
+  --bs-success-rgb: #{to-rgb($lia-dark-success)};
+  --bs-info: #{$lia-dark-info};
+  --bs-info-rgb: #{to-rgb($lia-dark-info)};
+  --bs-warning: #{$lia-dark-warning};
+  --bs-warning-rgb: #{to-rgb($lia-dark-warning)};
+  --bs-danger: #{$lia-dark-danger};
+  --bs-danger-rgb: #{to-rgb($lia-dark-danger)};
+
+  // Badges. The fills follow the variables above; the compiled text colours
+  // were chosen against the light fills, so every chip gets ink that suits
+  // the lifted pigments. Primary stays the brand fill.
+  .text-bg-primary {
+    color: $white if($enable-important-utilities, !important, null);
+    background-color: $primary if($enable-important-utilities, !important, null);
+  }
+
+  .text-bg-secondary,
+  .text-bg-success,
+  .text-bg-info,
+  .text-bg-warning,
+  .text-bg-danger {
+    color: $lia-dark-ink if($enable-important-utilities, !important, null);
+  }
+
+  // On a pastel fill, everything must take ink — not just the compiled text
+  // colour. Muted copy, headings and the close button read through theme
+  // variables that would otherwise stay light-on-light.
+  .text-bg-success,
+  .text-bg-info,
+  .text-bg-warning,
+  .text-bg-danger,
+  .text-bg-secondary,
+  .bg-success,
+  .bg-info,
+  .bg-warning,
+  .bg-danger {
+    --bs-heading-color: #{$lia-dark-ink};
+    --bs-emphasis-color: #{$lia-dark-ink};
+    --bs-secondary-color: #{rgba($lia-dark-ink, 0.75)};
+    --bs-tertiary-color: #{rgba($lia-dark-ink, 0.55)};
+
+    .btn-close {
+      filter: none;
+    }
+  }
+
+  // The light/dark pair has no per-theme derivation in Bootstrap at all:
+  // `.text-bg-dark` chips vanish into the charcoal and `.text-bg-light` sits
+  // as a white slab. Both become steps of the neutral ladder.
+  .text-bg-light {
+    color: $light-text-emphasis-dark if($enable-important-utilities, !important, null);
+    background-color: $lia-dark-700 if($enable-important-utilities, !important, null);
+  }
+
+  .text-bg-dark {
+    background-color: #3a3a3b if($enable-important-utilities, !important, null);
+  }
+
+  .bg-light {
+    background-color: $lia-dark-700 if($enable-important-utilities, !important, null);
+  }
+
+  // Buttons: solid semantic fills take the dark set with ink text; outlines
+  // take the emphasis colours with hairlines that survive charcoal.
+  @each $state, $fill in (
+    'success': $lia-dark-success,
+    'info': $lia-dark-info,
+    'warning': $lia-dark-warning,
+    'danger': $lia-dark-danger,
+  ) {
+    .btn-#{$state} {
+      --bs-btn-color: #{$lia-dark-ink};
+      --bs-btn-bg: #{$fill};
+      --bs-btn-border-color: #{$fill};
+      --bs-btn-hover-color: #{$lia-dark-ink};
+      --bs-btn-hover-bg: #{tint-color($fill, 10%)};
+      --bs-btn-hover-border-color: #{tint-color($fill, 10%)};
+      --bs-btn-active-color: #{$lia-dark-ink};
+      --bs-btn-active-bg: #{shade-color($fill, 10%)};
+      --bs-btn-active-border-color: #{shade-color($fill, 10%)};
+      --bs-btn-disabled-color: #{$lia-dark-ink};
+      --bs-btn-disabled-bg: #{$fill};
+      --bs-btn-disabled-border-color: #{$fill};
+    }
+  }
+
+  @each $state, $accent in (
+    'primary': $lia-300,
+    'success': $success-text-emphasis-dark,
+    'info': $info-text-emphasis-dark,
+    'warning': $warning-text-emphasis-dark,
+    'danger': $danger-text-emphasis-dark,
+  ) {
+    .btn-outline-#{$state} {
+      --bs-btn-color: #{$accent};
+      --bs-btn-border-color: #{mix($accent, $lia-dark-700, 55%)};
+      --bs-btn-hover-color: #{$lia-dark-ink};
+      --bs-btn-hover-bg: #{$accent};
+      --bs-btn-hover-border-color: #{$accent};
+      --bs-btn-active-color: #{$lia-dark-ink};
+      --bs-btn-active-bg: #{$accent};
+      --bs-btn-active-border-color: #{$accent};
+      --bs-btn-disabled-color: #{mix($accent, $lia-dark-700, 55%)};
+    }
+  }
+
+  // The neutral chrome: resting controls must stay clearly above the
+  // disabled ones, which the stock grey erased.
+  .btn-secondary {
+    --bs-btn-color: #{$light-text-emphasis-dark};
+    --bs-btn-bg: #3a3a3b;
+    --bs-btn-border-color: #474747;
+    --bs-btn-hover-color: #{$light-text-emphasis-dark};
+    --bs-btn-hover-bg: #444445;
+    --bs-btn-hover-border-color: #525252;
+    --bs-btn-active-color: #{$light-text-emphasis-dark};
+    --bs-btn-active-bg: #{$lia-dark-700};
+    --bs-btn-active-border-color: #474747;
+  }
+
+  .btn-outline-secondary {
+    --bs-btn-color: #{$secondary-text-emphasis-dark};
+    --bs-btn-border-color: #4a4a4a;
+    --bs-btn-hover-color: #{$light-text-emphasis-dark};
+    --bs-btn-hover-bg: #{$lia-dark-700};
+    --bs-btn-hover-border-color: #525252;
+    --bs-btn-active-color: #{$light-text-emphasis-dark};
+    --bs-btn-active-bg: #3a3a3b;
+    --bs-btn-active-border-color: #525252;
+    --bs-btn-disabled-color: #{$body-tertiary-color-dark};
+  }
+
+  .btn-light {
+    --bs-btn-color: #{$light-text-emphasis-dark};
+    --bs-btn-bg: #{$lia-dark-700};
+    --bs-btn-border-color: #{$lia-dark-700};
+    --bs-btn-hover-color: #{$light-text-emphasis-dark};
+    --bs-btn-hover-bg: #3a3a3b;
+    --bs-btn-hover-border-color: #3a3a3b;
+    --bs-btn-active-color: #{$light-text-emphasis-dark};
+    --bs-btn-active-bg: #444445;
+    --bs-btn-active-border-color: #444445;
+  }
+
+  .btn-dark,
+  .btn-outline-dark {
+    --bs-btn-color: #{$light-text-emphasis-dark};
+    --bs-btn-bg: #3a3a3b;
+    --bs-btn-border-color: #474747;
+    --bs-btn-hover-color: #{$light-text-emphasis-dark};
+    --bs-btn-hover-bg: #444445;
+    --bs-btn-hover-border-color: #525252;
+    --bs-btn-active-color: #{$light-text-emphasis-dark};
+    --bs-btn-active-bg: #{$lia-dark-700};
+    --bs-btn-active-border-color: #474747;
+  }
+
+  .btn-outline-dark {
+    --bs-btn-bg: transparent;
+  }
+
+  // Forms. Text inputs and switches were re-themed with the ladder; checks
+  // and radios still carried the light theme's near-white `$input-bg`.
+  .form-check-input:not(:checked) {
+    background-color: $lia-dark-850;
+    border-color: #55555a;
+  }
+
+  .form-control,
+  .form-select {
+    border-color: #464649;
+  }
+
+  .form-control:disabled,
+  .form-select:disabled {
+    background-color: $lia-dark-700;
+  }
+
+  // A table inside a card paints the page background and reads as a sunken
+  // block; let it sit on whatever carries it, as it does in light mode.
+  .table {
+    --bs-table-bg: transparent;
+  }
+}
