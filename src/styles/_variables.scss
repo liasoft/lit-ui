@@ -55,31 +55,31 @@ $light-bg: $gray-100 !default;
 
 // Dark mode
 //
-// Not Bootstrap's warm greys inverted, but a slate ramp cast toward the
-// accent's own hue, so the dark theme reads as the same product after dark
-// rather than a different one. One ladder, used everywhere: the sidebar is
-// the deepest step, the page sits above it, recessed wells (inputs, striped
-// rows) sit below raised surfaces (cards, navbar, heading bar), and whatever
-// floats (dropdowns, the search box) takes the lightest step.
-$lia-dark-950: #0e1217 !default; // sidebar and the deepest chrome
-$lia-dark-900: #14181f !default; // page background
-$lia-dark-850: #191f27 !default; // recessed: inputs, wells, striped rows
-$lia-dark-800: #1d242e !default; // raised: cards, navbar, heading bar
-$lia-dark-700: #242c38 !default; // floating: dropdowns, popovers, hover
+// The accent is VS Code's blue, so dark mode is VS Code's charcoal: the
+// neutral greys of its Dark themes, not Bootstrap's warm greys and not a
+// blue-tinted slate. One ladder, used everywhere: the sidebar is the deepest
+// step, the page sits above it, recessed wells (inputs, striped rows) sit
+// below raised surfaces (cards, navbar, heading bar), and whatever floats
+// (dropdowns, the search box) takes the lightest step.
+$lia-dark-950: #181818 !default; // sidebar and the deepest chrome
+$lia-dark-900: #1e1e1e !default; // page background
+$lia-dark-850: #222222 !default; // recessed: inputs, wells, striped rows
+$lia-dark-800: #252526 !default; // raised: cards, navbar, heading bar
+$lia-dark-700: #303031 !default; // floating: dropdowns, popovers, hover
 $dark-bg: $lia-dark-800 !default;
 
 // Bootstrap's own dark-mode tokens, fed from the same ladder so every
 // component Bootstrap colours itself (tables, forms, dropdowns, modals)
 // lands on it too.
 $body-bg-dark:              $lia-dark-900 !default;
-$body-color-dark:           #d2d9e1 !default;
+$body-color-dark:           #cccccc !default;
 $body-secondary-bg-dark:    $lia-dark-700 !default;
-$body-secondary-color-dark: #93a0af !default;
+$body-secondary-color-dark: #9d9d9d !default;
 $body-tertiary-bg-dark:     $lia-dark-850 !default;
-$body-tertiary-color-dark:  #6d7887 !default;
-$border-color-dark:         #2b3442 !default;
-$border-color-translucent-dark: rgba(#9fb6cf, 0.12) !default;
-$headings-color-dark:       #e2e8ef !default;
+$body-tertiary-color-dark:  #6f6f6f !default;
+$border-color-dark:         #2b2b2b !default;
+$border-color-translucent-dark: rgba($white, 0.08) !default;
+$headings-color-dark:       #e5e5e5 !default;
 $link-color-dark:           $lia-300 !default;
 
 // Typography
