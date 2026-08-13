@@ -42,6 +42,23 @@ in an admin UI, but it is a real trade-off worth knowing about.
 
 ---
 
+## Claude Code
+
+The kit ships first-class [Claude Code](https://claude.com/claude-code) support: the
+repo doubles as a plugin marketplace, and the `lit-ui` plugin carries one knowledge
+skill per component family plus an overview that maps use cases to families. An agent
+working in your repo loads exactly the component knowledge it needs — nothing more:
+
+```
+/plugin marketplace add liasoft/lit-ui
+/plugin install lit-ui@lit-ui
+```
+
+After that, asking Claude Code to "add a members listing with row actions" makes it
+reach for `TableListing` and `lia-data-table` the way this README would.
+
+---
+
 ## A complete page
 
 ```ts
@@ -183,18 +200,6 @@ npm run dev        # http://localhost:5180
 compositions under **Full pages** — an admin dashboard, a settings page with
 sub-sidebar navigation, a log viewer, a usage page, a sign-in screen and an install
 wizard. Each demo shows the data object that drives it next to the live example.
-
-## Claude Code plugin
-
-The repo doubles as a Claude Code plugin marketplace. The `lit-ui` plugin ships
-knowledge skills — an overview that maps use cases to component families, and one
-skill per family — so an agent working in a consumer repo can load exactly the
-component knowledge it needs:
-
-```
-/plugin marketplace add liasoft/lit-ui
-/plugin install lit-ui@lit-ui
-```
 
 ## Scripts
 

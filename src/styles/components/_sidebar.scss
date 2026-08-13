@@ -65,11 +65,16 @@
       > .collapsing {
         background: shade-color($dark, 2%);
 
+        // The indent is padding, not margin: a child's hover and active
+        // surface spans the full rail, exactly like its parent's.
         a {
           opacity: 0.78;
-          margin-left: 1rem;
+          padding-left: 2rem;
 
-          &.active { opacity: 1; }
+          &.active {
+            opacity: 1;
+            padding-left: calc(2rem - 3px);
+          }
         }
       }
     }
@@ -83,4 +88,23 @@
 
 @include color-mode(dark) {
   .lia-sub-sidebar { background: $dark-bg; }
+
+  // In dark mode the rail takes the deepest step of the dark ladder, so the
+  // page reads sidebar < body < cards. `.bg-dark` paints through
+  // `--bs-dark-rgb`, so overriding the variable recolours it without an
+  // `!important` contest; the group surfaces move with it.
+  .lia-sidebar {
+    --bs-dark-rgb: #{red($lia-dark-950)}, #{green($lia-dark-950)}, #{blue($lia-dark-950)};
+
+    .user-info { background: shade-color($lia-dark-950, 25%); }
+
+    > .nav > .nav-item {
+      > .nav-link:not(.collapsed) { background: tint-color($lia-dark-950, 4%); }
+
+      > .collapse,
+      > .collapsing {
+        background: shade-color($lia-dark-950, 30%);
+      }
+    }
+  }
 }
