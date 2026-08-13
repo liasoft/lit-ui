@@ -40,7 +40,8 @@
     "./dist/components/*.js",
     "./dist/chunks/*.js",
     "./src/index.ts",
-    "./src/components/**/*.ts"
+    "./src/components/**/*.ts",
+    "./demo/**/*.ts"
   ],
   "scripts": {
     "dev": "vite",
