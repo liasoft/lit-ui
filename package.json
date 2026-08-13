@@ -1,6 +1,6 @@
 {
   "name": "@liasoft/lit-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Bootstrap 5 web-components UI kit — app shell, navigation, dashboards, data tables and a data-driven form system.",
   "license": "MIT",
   "repository": {
