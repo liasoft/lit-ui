@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/liasoft/lit-ui/compare/v0.1.1...v0.1.2) (2026-08-13)
+
+
+### Bug Fixes
+
+* dark-mode palette, sidebar sub-item highlight, and Claude Code docs ([#6](https://github.com/liasoft/lit-ui/issues/6)) ([d55b25f](https://github.com/liasoft/lit-ui/commit/d55b25f6a41f31a546beb4799a017cd5239af68c))
+
 ## [0.1.1](https://github.com/liasoft/lit-ui/compare/v0.1.0...v0.1.1) (2026-08-13)
 
 
