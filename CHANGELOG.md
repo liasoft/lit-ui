@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.3](https://github.com/liasoft/lit-ui/compare/v0.1.2...v0.1.3) (2026-08-13)
+
+
+### Bug Fixes
+
+* a dark chromatic layer to match the light theme's elegance ([#10](https://github.com/liasoft/lit-ui/issues/10)) ([05e3bde](https://github.com/liasoft/lit-ui/commit/05e3bde33345e8f015d08b2e106072e98f538044))
+* retune the dark theme to VS Code's charcoal neutrals ([#8](https://github.com/liasoft/lit-ui/issues/8)) ([ff83d60](https://github.com/liasoft/lit-ui/commit/ff83d603129d9ba8c20ce1013763e66a1e8f8156))
+
 ## [0.1.2](https://github.com/liasoft/lit-ui/compare/v0.1.1...v0.1.2) (2026-08-13)
 
 
