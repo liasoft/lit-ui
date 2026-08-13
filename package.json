@@ -60,14 +60,14 @@
     "bootstrap": "^5.3.3"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^6.7.2",
+    "@fortawesome/fontawesome-free": "^7.3.1",
     "@popperjs/core": "^2.11.8",
     "@types/bootstrap": "^5.2.10",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.8",
     "sass": "^1.85.1",
-    "typescript": "^5.7.3",
-    "vite": "^6.2.0"
+    "typescript": "^7.0.2",
+    "vite": "^8.2.1"
   },
   "engines": {
     "node": ">=20"

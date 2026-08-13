@@ -10,25 +10,32 @@
 // globally rather than per component.
 // ---------------------------------------------------------------------------
 
+// Icon font
+//
+// Font Awesome 7 only reads its font path through the Sass module system, so
+// its `@use` lines have to sit above every `@import` — which also means its
+// CSS lands before Bootstrap's; none of their selectors overlap.
+//
+// The webfont files are resolved through the package itself rather than
+// Font Awesome's default `../webfonts`, which is relative to wherever the
+// compiled CSS happens to land. A bundler can follow this specifier and emit
+// the font files; plain `sass` users should set `$fa-font-path` before
+// loading this sheet, with a path that is correct for their output directory.
+$fa-font-path: "@fortawesome/fontawesome-free/webfonts" !default;
+
+@use "@fortawesome/fontawesome-free/scss/variables" as fa-variables with (
+  $font-path: $fa-font-path
+);
+@use "@fortawesome/fontawesome-free/scss/fontawesome";
+@use "@fortawesome/fontawesome-free/scss/solid";
+@use "@fortawesome/fontawesome-free/scss/regular";
+@use "@fortawesome/fontawesome-free/scss/brands";
+
 // 1. Tokens (override these before importing to re-brand)
 @import "variables";
 
 // 2. Bootstrap
 @import "bootstrap/scss/bootstrap";
-
-// 3. Icon font
-//
-// The webfont files are resolved through the package itself rather than
-// Font Awesome's default `../webfonts`, which is relative to wherever the
-// compiled CSS happens to land. A bundler can follow this specifier and emit
-// the font files; plain `sass` users should override `$fa-font-path` with a
-// path that is correct for their output directory.
-$fa-font-path: "@fortawesome/fontawesome-free/webfonts" !default;
-
-@import "@fortawesome/fontawesome-free/scss/fontawesome";
-@import "@fortawesome/fontawesome-free/scss/solid";
-@import "@fortawesome/fontawesome-free/scss/regular";
-@import "@fortawesome/fontawesome-free/scss/brands";
 
 // 4. Kit components — one partial per component family
 @import "components/generic";
