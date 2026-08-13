@@ -18,10 +18,12 @@
 @include color-mode(dark) {
   .lia-formfield { border-bottom: $border-color-dark solid 1px; }
 
+  // Inputs sit one step below the card they live on — a recessed well, the
+  // dark counterpart of the light theme's tinted `$input-bg`.
   .form-control,
-  .form-select { background-color: $dark-bg; }
+  .form-select { background-color: $lia-dark-850; }
 
-  .form-switch .form-check-input:not(:checked):not(:focus) { background-color: $dark-bg; }
+  .form-switch .form-check-input:not(:checked):not(:focus) { background-color: $lia-dark-850; }
 
-  .form-control[readonly] { background-color: $body-tertiary-bg-dark; }
+  .form-control[readonly] { background-color: $lia-dark-900; }
 }

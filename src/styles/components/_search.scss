@@ -37,7 +37,8 @@
     .lia-search-input { color: $body-color-dark; }
 
     .lia-search-results-box {
-      background: $dark-bg;
+      // Floating surface: the lightest step of the dark ladder.
+      background: $lia-dark-700;
       border: $border-color-dark solid 1px;
     }
   }

@@ -1,9 +1,9 @@
 /**
  * Demo pages — Getting started.
  *
- * The four screens a reader wants before they look at a single component: what
- * the kit is, how to install it, why it renders into the light DOM, how to
- * re-brand it, and where every family lives.
+ * The five screens a reader wants before they look at a single component: what
+ * the kit is, how to install it, how to hand it to Claude Code, why it renders
+ * into the light DOM, how to re-brand it, and where every family lives.
  *
  * The overview doubles as the application's home route (`/`), so it is the
  * first thing the router resolves.
@@ -409,6 +409,56 @@ function renderInstallation(): TemplateResult {
   `;
 }
 
+const CLAUDE_INSTALL = dedent`
+  /plugin marketplace add liasoft/lit-ui
+  /plugin install lit-ui@lit-ui
+`;
+
+function renderClaudeCode(): TemplateResult {
+  return html`
+    ${section(
+      'The kit, as agent knowledge',
+      'The repository doubles as a Claude Code plugin marketplace. The lit-ui plugin ships one knowledge skill per component family, plus an overview that maps use cases to families — so an agent working in your repo loads exactly the component knowledge it needs, nothing more.',
+      [
+        example(
+          'Install the plugin',
+          html`<lia-code-block .code=${CLAUDE_INSTALL} language="bash" no-header></lia-code-block>`,
+          undefined,
+          { bodyClass: 'p-3' }
+        ),
+        example(
+          'What the skills cover',
+          propTable(
+            [
+              {
+                name: 'overview',
+                type: 'skill',
+                description:
+                  'Maps use cases to families: "a listing with row actions" → table, "a login screen" → auth.',
+              },
+              {
+                name: '<family>',
+                type: 'skill × 9',
+                description:
+                  'One per family — the elements, their data objects, the events they raise, and the patterns the demo uses.',
+              },
+            ],
+            'Plugin skills'
+          )
+        ),
+        note(
+          html`Once installed, asking Claude Code to <em>“add a members listing with row
+            actions”</em> makes it reach for <code>TableListing</code> and
+            <code>&lt;lia-data-table&gt;</code> the way this gallery would — instead of guessing
+            at markup.`,
+          'info',
+          'fa-solid fa-wand-magic-sparkles'
+        ),
+      ]
+    )}
+  `;
+}
+
 function renderLightDom(): TemplateResult {
   return html`
     ${section(
@@ -583,6 +633,15 @@ export const gettingStartedRoutes: DemoRoute[] = [
     description: 'One package, two peer dependencies and three imports.',
     keywords: ['npm', 'install', 'setup', 'peer', 'stylesheet', 'bundler'],
     render: renderInstallation,
+  },
+  {
+    path: '/getting-started/claude-code',
+    title: 'Claude Code',
+    group: 'getting-started',
+    icon: 'fa-solid fa-robot',
+    description: 'First-class agent support: one knowledge skill per component family.',
+    keywords: ['claude', 'agent', 'ai', 'plugin', 'marketplace', 'skill', 'mcp'],
+    render: renderClaudeCode,
   },
   {
     path: '/getting-started/light-dom',

@@ -142,7 +142,7 @@ export class LiaSidebar extends LiaElement {
       class="nav-item d-flex justify-content-between align-items-center"
       aria-current="${ifDefined(child.active ? 'page' : undefined)}"
     >
-      <div class="me-auto">
+      <div class="flex-grow-1">
         <a
           class="${cx('nav-link', 'text-light', child.active && 'active fw-bold')}"
           href="${child.url ?? '#'}"
@@ -193,7 +193,7 @@ export class LiaSidebar extends LiaElement {
         ${this.renderBadge(item)}
       </a>
       <div class="${cx('collapse', open && 'show')}" id="${panelId}" data-lia-group="${key}">
-        <ul class="nav flex-column ps-3">
+        <ul class="nav flex-column">
           ${this.visible(item.items).map((child) => this.renderChild(child))}
         </ul>
       </div>
