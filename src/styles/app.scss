@@ -58,3 +58,7 @@ $fa-font-path: "@fortawesome/fontawesome-free/webfonts" !default;
 @import "components/settings";
 @import "components/auth";
 @import "components/editor";
+
+// 5. The dark chromatic layer — re-points every compiled semantic colour at
+// the dark palette. Last on purpose: it overrides component variants above.
+@import "components/dark";
