@@ -178,12 +178,21 @@ them through `with (...)`; variables defined in your own file before a plain `@u
 no effect. Configuration values must be literals or expressions of your own, not
 variables of the module being configured:
 
+Compiling the SCSS yourself needs two packages that `@liasoft/lit-ui` does not install for
+you (Bootstrap comes from the install step above): Sass and Font Awesome, whose Sass the
+stylesheet imports.
+
+```bash
+npm install --save-dev sass@^1.85 @fortawesome/fontawesome-free@^7.3
+```
+
 ```scss
 // src/theme.scss
 @use 'pkg:@liasoft/lit-ui/scss/app' with (
   $lia-800: #0f766e,          // your brand
   $primary: #0f766e,
-  $lia-sidebar-width: 280px
+  $lia-sidebar-width: 280px,
+  $fa-font-path: '/webfonts'  // where you serve the Font Awesome font files
 );
 ```
 
@@ -192,12 +201,14 @@ Compile it with Sass's Node package importer, which follows the package `exports
 Sass the stylesheet imports:
 
 ```bash
-sass --pkg-importer=node --load-path=node_modules src/theme.scss dist/theme.css
+npx sass --pkg-importer=node --load-path=node_modules src/theme.scss dist/theme.css
 ```
 
 A plain `sass` CLI does not read package `exports` on its own, so the bare
-`@liasoft/lit-ui/scss/app` form only works where your bundler resolves it for you. The
-font loading notes in `app.scss` (`$fa-font-path`) still apply. See Sass's
+`@liasoft/lit-ui/scss/app` form only works where your bundler resolves it for you. Plain
+Sass does not copy font files: `$fa-font-path` is written into the CSS as-is, so copy
+`node_modules/@fortawesome/fontawesome-free/webfonts` to the matching location of your
+site (the default is a package specifier that only a bundler can follow). See Sass's
 [`@use` configuration](https://sass-lang.com/documentation/at-rules/use/#configuration)
 and [loading a module that contains imports](https://sass-lang.com/documentation/at-rules/import/#loading-a-module-that-contains-imports).
 
