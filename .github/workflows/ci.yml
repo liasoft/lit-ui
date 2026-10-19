@@ -28,3 +28,36 @@ jobs:
 
       - name: Build demo
         run: npm run build:demo
+
+      - name: Verify documented Sass theming example
+        run: |
+          set -euo pipefail
+          # Isolated consumer: packed package, scripts disabled, and only the
+          # documented prerequisites (no repository devDependencies).
+          pack="$RUNNER_TEMP/pack"
+          consumer="$RUNNER_TEMP/consumer"
+          mkdir -p "$pack" "$consumer"
+          npm pack --ignore-scripts --pack-destination "$pack"
+          cd "$consumer"
+          npm init -y > /dev/null
+          npm install --ignore-scripts "$pack"/liasoft-lit-ui-*.tgz bootstrap
+          npm install --ignore-scripts --save-dev sass@^1.85 @fortawesome/fontawesome-free@^7.3
+          mkdir src dist
+          cat > src/theme.scss <<'EOF'
+          @use 'pkg:@liasoft/lit-ui/scss/app' with (
+            $lia-800: #0f766e,
+            $primary: #0f766e,
+            $lia-sidebar-width: 280px,
+            $fa-font-path: '/webfonts'
+          );
+          EOF
+          npx sass --pkg-importer=node --load-path=node_modules --quiet-deps \
+            --silence-deprecation=import,global-builtin,color-functions \
+            src/theme.scss dist/theme.css
+          grep -F -- '--bs-primary: #0f766e;' dist/theme.css
+          grep -F -- 'width: 280px;' dist/theme.css
+          grep -F -- '/webfonts/' dist/theme.css
+          if grep -F -- 'width: 256px;' dist/theme.css; then
+            echo "default sidebar width leaked into configured theme" >&2
+            exit 1
+          fi
