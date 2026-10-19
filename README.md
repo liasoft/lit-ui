@@ -172,16 +172,34 @@ abort semantics, and dependent option lists.
 
 ## Theming
 
-Override the SCSS tokens before importing, and everything follows — including Bootstrap
-itself:
+Configure the SCSS tokens when you load the stylesheet, and everything follows — including
+Bootstrap itself. Tokens are `!default` variables, and Sass only lets a `@use` override
+them through `with (...)`; variables defined in your own file before a plain `@use` have
+no effect. Configuration values must be literals or expressions of your own, not
+variables of the module being configured:
 
 ```scss
-$lia-800: #0f766e;   // your brand
-$primary: $lia-800;
-$lia-sidebar-width: 280px;
-
-@use '@liasoft/lit-ui/scss/app';
+// src/theme.scss
+@use 'pkg:@liasoft/lit-ui/scss/app' with (
+  $lia-800: #0f766e,          // your brand
+  $primary: #0f766e,
+  $lia-sidebar-width: 280px
+);
 ```
+
+Compile it with Sass's Node package importer, which follows the package `exports` map
+(`./scss/*` maps to `src/styles/*`), and a load path for the Bootstrap and Font Awesome
+Sass the stylesheet imports:
+
+```bash
+sass --pkg-importer=node --load-path=node_modules src/theme.scss dist/theme.css
+```
+
+A plain `sass` CLI does not read package `exports` on its own, so the bare
+`@liasoft/lit-ui/scss/app` form only works where your bundler resolves it for you. The
+font loading notes in `app.scss` (`$fa-font-path`) still apply. See Sass's
+[`@use` configuration](https://sass-lang.com/documentation/at-rules/use/#configuration)
+and [loading a module that contains imports](https://sass-lang.com/documentation/at-rules/import/#loading-a-module-that-contains-imports).
 
 Light and dark are both first-class via Bootstrap 5.3's `data-bs-theme`. `initTheme()`
 wires the stored preference and follows the OS when set to `auto`; `<lia-theme-toggle>`
@@ -212,9 +230,10 @@ wizard. Each demo shows the data object that drives it next to the live example.
 
 ## Status
 
-`0.1.0`. There is no automated test suite yet — the kit is verified by a typecheck, both
-builds, and a headless render of every demo route. Treat the component APIs as unstable
-until `1.0`.
+The `0.1.x` series (see `package.json` for the current release). There is no automated
+test suite yet — the kit is verified by a typecheck, both builds, a check that the
+documented Sass theming example compiles, and a headless render of every demo route.
+Treat the component APIs as unstable until `1.0`.
 
 ## License
 
