@@ -33,7 +33,7 @@ import '@liasoft/lit-ui';              // registers all 70 elements
 | `auth` | `lia-auth-layout` `lia-login-form` `lia-forgot-password-form` `lia-reset-password-form` `lia-two-factor-form` `lia-two-factor-setup` `lia-otp-prompt` `lia-credentials-prompt` `lia-question-dialog` `lia-profile-form` `lia-password-strength` `lia-code-input` | sign-in, recovery, 2FA, re-auth prompts; presentation-only — they emit events, nothing posts |
 | `editors` | `lia-record-editor` `lia-log-viewer` `lia-diff-view` `lia-code-block` `lia-api-keys-panel` `lia-file-tree` | specialised views: repeatable-record editing, log tailing, diffs, code display, API keys, file trees |
 
-Typical page: `lia-app-shell` → `lia-page` → `lia-data-table` / `lia-form` / dashboard widgets. Load the family skill before writing components from it.
+Typical page: transparent app/view → `lia-app-shell` → `lia-page` → `lia-card` → `lia-data-table` / `lia-form`, with dashboard widgets as needed. Before building an app shell or changing page layout, read the [complete routed application recipe](../layout/SKILL.md#compose-a-routed-application). It covers padding ownership, attached tables, navigation, confirmation setup and responsive checks. Load the family skill before writing components from it.
 
 ## Base classes (host apps extend these)
 
@@ -44,7 +44,7 @@ Typical page: `lia-app-shell` → `lia-page` → `lia-data-table` / `lia-form` /
 
 ## Cross-cutting contracts
 
-- **`ActionDescriptor`** — every button/toolbar/row action anywhere: `{ id, label, icon, href, variant, size, disabled, visible, confirm, modal, back, data }`. `href` renders an anchor; otherwise a button emitting `lia-action` with detail `{ action, id, row?, rows?, index? }`. `confirm: { message, title?, variant?, confirmLabel? }` routes through `lia-confirm-dialog` before the event fires — identically in page headings, table rows and bulk bars.
+- **`ActionDescriptor`** — every button/toolbar/row action anywhere: `{ id, label, icon, href, variant, size, disabled, visible, confirm, modal, back, data }`. `href` renders an anchor; otherwise a button emitting `lia-action` with detail `{ action, id, row?, rows?, index? }`. `confirm: { message, title?, variant?, confirmLabel? }` routes through `lia-confirm-dialog` before the event fires when `installConfirmHandler()` is installed once at the app root; without it the action falls back to native browser confirmation — identically in page headings, table rows and bulk bars.
 - **Events** — all named `lia-*`, bubbling and composed. Global map includes `lia-action`, `lia-submit` (`{ values }`), `lia-change`, `lia-sort`, `lia-page-change`, `lia-search`, `lia-selection-change`, `lia-columns-change`, `lia-navigate` (`{ url, item? }`), `lia-dismiss`.
 - **`Variant`** — Bootstrap contextual colors `primary | secondary | success | danger | warning | info | light | dark` (actions also take `outline-*`). **`Size`** — `sm | md | lg`. Icons are icon-font class strings, e.g. `fa-solid fa-user`.
 - **Dark mode** — Bootstrap 5.3 `data-bs-theme` on `<html>`. `initTheme()` applies the stored preference (`lia-color-scheme`, `light|dark|auto`) and tracks the OS on `auto`; `applyScheme()` sets it and fires `lia-theme-change` on `window`; `lia-theme-toggle` is the user switch. Never toggle theme classes by hand.
