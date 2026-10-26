@@ -127,20 +127,18 @@ mobile navigation closes after routing, and confirmations use `lia-confirm-dialo
 Verify light and dark themes and check for page-wide horizontal overflow.
 
 
-### Compatibility with 0.1.3
+### Compatibility with 0.1.3 and earlier
 
-With search disabled, Bootstrap's expanded-navbar CSS can override the search
-container's `hidden` attribute and leave account controls in the wrong position.
-`covdbg-license` uses these scoped adjustments. Apply them only to your app root
-when using the affected version; do not change the shell's sizing or page gutters:
+Up to 0.1.3, a navbar with search disabled left the empty search container in
+place, which pushed the account controls out of position, and a responsive action
+lost its accessible name below `lg`. Later versions fix both. On 0.1.3 or earlier,
+scope these adjustments to your app root, and supply `title: label` on responsive
+action descriptors; remove both after upgrading:
 
 ```css
 console-app lia-navbar .lia-collapse-search[hidden] { display: none !important; }
 console-app lia-navbar .container-fluid > div.order-md-1 { flex-grow: 1 !important; }
 ```
-
-Also supply `title: label` on responsive action descriptors in 0.1.3. Their visible
-label is hidden below `lg`; a title preserves the accessible name in that state.
 
 
 ## Component reference

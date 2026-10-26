@@ -40,7 +40,7 @@ html`<lia-button .action=${{ id: 'delete', icon: 'fa-solid fa-trash', title: 'De
 ```
 
 ### `lia-action-bar` — toolbar of descriptors
-Props: `.actions: ActionDescriptor[]`, `align` (`start|center|end|between`), `size`, `variant` (fallbacks; default `outline-primary`), `gap` (0–5), `label-responsive` (default **true**: labels hide below `lg`; a Boolean attribute, so turn it off with `.labelResponsive=${false}`), `label`, `.row`, `.index`. Renders buttons inline — the bar is the single `lia-action` source.
+Props: `.actions: ActionDescriptor[]`, `align` (`start|center|end|between`), `size`, `variant` (fallbacks; default `outline-primary`), `gap` (0–5), `label-responsive` (default **true**: labels hide below `lg` and become the accessible name; `label-responsive="false"` turns it off), `label`, `.row`, `.index`. Renders buttons inline — the bar is the single `lia-action` source.
 
 ```ts
 html`<lia-action-bar align="end"

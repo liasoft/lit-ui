@@ -58,6 +58,15 @@ working in your repo loads exactly the component knowledge it needs — nothing 
 After that, asking Claude Code to "add a members listing with row actions" makes it
 reach for `TableListing` and `lia-data-table` the way this README would.
 
+The same skills ship in the npm package, matching the installed version, under
+`node_modules/@liasoft/lit-ui/plugins/lit-ui/skills/`. Point other agents (Codex,
+Copilot) at `overview/SKILL.md` there, for example from your `AGENTS.md`.
+
+## What changed
+
+[CHANGELOG.md](CHANGELOG.md) lists every release: new components and options, fixes,
+and what to change when you upgrade.
+
 ---
 
 ## A complete page
