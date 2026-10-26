@@ -24,5 +24,15 @@ For UI changes, also inspect affected demo routes with `npm run dev` (port 5180)
 There is no automated test script. Documentation-only changes need path and
 format validation rather than application builds.
 
+`CHANGELOG.md` is for consumers and is written by release-please from the
+squash-merged PR title, so make that title a Conventional Commit that describes
+the change as a consumer sees it (`feat:` new components or options, `fix:`
+behaviour and skill corrections, `fix(deps):` runtime dependencies; `chore:`,
+`ci:` and `docs:` stay out of the changelog). When one PR carries several
+consumer-visible changes, list each as its own Conventional Commit between
+`BEGIN_COMMIT_OVERRIDE` and `END_COMMIT_OVERRIDE` in the PR body. If an upgrade
+needs action from consumers, add an "Upgrading" note to the release PR's
+`CHANGELOG.md` entry before merging it.
+
 Preserve the Claude plugin and marketplace configuration. Before editing a
 subdirectory, read any nested agent guidance and applicable scoped rules.

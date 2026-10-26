@@ -121,4 +121,4 @@ html`<lia-widget-grid label="Dashboard" .widgets=${[
 - **`html` fields** (`InfoEntry.html`, `ActivityItem.html`, `DashboardWidget.html`) are trusted markup — never feed them user input. For interactive activity rows, still set `text` as the accessible/plain fallback.
 - **Rows with `href` are links; the rest only become buttons under `interactive`.** Don't set `interactive` unless you listen for `lia-activity-select`.
 - **Charts:** always pair a chart with a real `label` and a `summary` (or a table nearby) so the figures survive without colour or canvas. Theme colours come from Bootstrap tokens; the chart rebuilds on `lia-theme-change`, so dark mode works with no extra code.
-- **Empty states are first-class:** every element renders an overridable `empty-message` — a day-one dashboard should look deliberate, not broken.
+- **Empty states are first-class:** `lia-info-card` and `lia-activity-list` render an overridable `empty-message` — a day-one dashboard should look deliberate, not broken.

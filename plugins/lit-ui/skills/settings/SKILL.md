@@ -9,7 +9,7 @@ description: Build a settings/preferences screen with @liasoft/lit-ui — groupe
 
 Use it for screens that **configure** a system rather than list its data. One element does the whole job: `<lia-settings-page>` renders a filtered stack of setting groups, a rail of section anchors that follows the scroll, and a single save/reset bar. Prefer it over composing `<lia-form>` + hand-rolled anchors whenever a page has more than one titled block of settings. The pieces are usable alone: `<lia-settings-group>` for a single titled block inside your own `<form>`, `<lia-settings-nav>` as an anchor rail for *any* page of titled sections.
 
-This family composes with the **form** family: every group embeds a `FormDefinition` (same `sections.fields` shape, same field types, same validation), and the page's API mirrors `<lia-form>` — `getValues()`, `setValues()`, `reset()`, `validate()`, `rules`, `messages`, `buttons`, `errors`. It also uses `<lia-page-heading>` (heading + `ActionDescriptor[]` toolbar), `<lia-alert-stack>` (`AlertMessage[]` via `.alerts`), and `<lia-empty-state>` internally.
+This family composes with the **form** family: every group embeds a `FormDefinition` (same `sections.fields` shape, same field types, same synchronous validation; async rules are not run here), and the page's API mirrors `<lia-form>` — `getValues()`, `setValues()`, `reset()`, `validate()` (synchronous, returns `FormErrors`), `rules`, `messages`, `buttons`, `errors`. It also uses `<lia-page-heading>` (heading + `ActionDescriptor[]` toolbar), `<lia-alert-stack>` (`AlertMessage[]` via `.alerts`), and `<lia-empty-state>` internally.
 
 ## Setup
 

@@ -4,6 +4,7 @@ import { LiaElement } from '../../core/base-element.js';
 import { cx } from '../../core/utils.js';
 import type { ActionDescriptor, Size, Variant } from '../../core/types.js';
 import { isActionVisible, renderAction } from './render-action.js';
+import { flag } from '../layout/flag.js';
 
 /** Horizontal distribution of the controls inside the bar. */
 export type ActionBarAlign = 'start' | 'center' | 'end' | 'between';
@@ -53,8 +54,8 @@ export class LiaActionBar extends LiaElement {
   /** Fallback variant for actions that do not set their own. */
   @property({ type: String }) variant: Variant | `outline-${Variant}` = 'outline-primary';
 
-  /** Hide labels below `lg`, keeping the icons. */
-  @property({ type: Boolean, attribute: 'label-responsive' }) labelResponsive = true;
+  /** Hide labels below `lg`, keeping the icons. `label-responsive="false"` turns it off. */
+  @property({ converter: flag, attribute: 'label-responsive' }) labelResponsive = true;
 
   /** Accessible name for the group. */
   @property({ type: String }) label = 'Actions';

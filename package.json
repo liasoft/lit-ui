@@ -31,7 +31,8 @@
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "plugins/lit-ui/skills"
   ],
   "sideEffects": [
     "**/*.css",

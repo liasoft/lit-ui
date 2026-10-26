@@ -263,8 +263,13 @@ export function renderAction<Row = unknown>(
   const inner = html`${glyph}${actionLabel(action, responsive)}`;
   const onClick = (event: Event): void => handleActionEvent(action, options, event);
 
-  // An icon-only control still needs an accessible name.
-  const ariaLabel = action.label ? undefined : (action.title ?? action.id);
+  // An icon-only control still needs an accessible name, and so does one whose
+  // label is hidden below `lg`.
+  const ariaLabel = action.label
+    ? responsive
+      ? action.label
+      : undefined
+    : (action.title ?? action.id);
 
   if (action.modal) {
     const target = `#${action.modal.id}`;

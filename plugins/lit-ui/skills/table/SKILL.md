@@ -57,7 +57,7 @@ html`<lia-table
 
 ### `<lia-data-table>` — local array
 
-Takes `.columns` and `.rows` as flat properties (no listing object) plus `listing-id`, `per-page` (0 = one page), `.rowActions`, `.rowKey`, `.rowClass`, `.rowDetail`, `.expandedKeys`, `.revealKey`, `selectable`, `.bulkActions`, `.sort`, `.search`, `.help`, `.compare`, `.match`, `.cellValueFor`, `no-search`, `no-column-manager`, and the same chrome props as `lia-table` (`show-summary` defaults **true** here). The same events still fire, so you can observe what it did. Imperative API: `setPage()`, `setSort()`, `setSearch()`, `pageForKey(key)`.
+Takes `.columns` and `.rows` as flat properties (no listing object) plus `listing-id`, `per-page` (0 = one page), `.rowActions`, `.rowKey`, `.rowClass`, `.rowDetail`, `.expandedKeys`, `.revealKey`, `selectable`, `.bulkActions`, `.sort`, `.search`, `.help`, `.compare`, `.match`, `.cellValueFor`, `no-search`, `no-column-manager`, and the chrome props `loading`, `compact`, `striped`, `hover`, `caption`, `empty-title`, `empty-message`, `.emptyActions`, `server`, `server-toggle`, `storage-key`, `.visibleColumns`, `show-summary` (defaults **true** here), `show-per-page`, `.labels`, `.format`. It does not expose `lia-table`'s `attached` (inside a `lia-card` the inner table still attaches on its own), `allow-unsorted`, `caption-hidden`, `skeleton-rows`, `hide-pagination`, `empty-icon` or `.selectedKeys`; selection is uncontrolled. The same events still fire, so you can observe what it did. Imperative API: `setPage()`, `setSort()`, `setSearch()`, `pageForKey(key)`.
 
 ```ts
 html`<lia-data-table listing-id="services" per-page="10" hover selectable
@@ -77,9 +77,9 @@ Props: `.state` (`PaginationState`), or `page`/`last-page`/`total`/`per-page` in
 
 ## Patterns and pitfalls
 
-- **Row actions** are `ActionDescriptor`s: `confirm: { message, title?, variant? }` fires cancelable `lia-action-confirm-request` first (claimed by `lia-confirm-dialog`, else falls back to `window.confirm`); `modal: { id, title, body }` opens a dialog instead of acting; `data` is echoed back in `lia-action`.
+- **Row actions** are `ActionDescriptor`s: `confirm: { message, title?, variant? }` fires cancelable `lia-action-confirm-request` first (claimed once `installConfirmHandler()` is installed, which opens `lia-confirm-dialog`; else falls back to `window.confirm`); `modal: { id, title, body }` opens a dialog instead of acting; `data` is echoed back in `lia-action`.
 - **Bulk actions** appear once rows are ticked; their `lia-action` detail carries the selected rows in `detail.rows`. Selection needs a stable `rowKey` — the default is the array index, which breaks across pages.
 - **`lia-data-table` sort/search are controlled props**: a fresh object literal in `render()` resets the user's click every re-render. Keep the initial `sort` identity stable (module constant).
 - **Row detail** (`rowDetail: (row) => template`) is fully controlled through `expandedKeys` — the table renders the region but never opens or closes it; toggle from your own trigger (typically a row action updating `expandedKeys`). Never sorted/searched/paged; follows its row through re-sorts via `rowKey`. `revealKey` jumps `lia-data-table` to the page containing a key (requires `rowKey`).
-- **Sort cycle** is asc → desc → unsorted; unsorted arrives as `{ field: '' }`. Set `allow-unsorted="false"` if your backend cannot return insertion order.
+- **Sort cycle** is asc → desc → unsorted; unsorted arrives as `{ field: '' }`. On `lia-table`, set `allow-unsorted="false"` if your backend cannot return insertion order.
 - Inside a `<lia-card>` the table auto-detects `attached` mode: no second card, tool strip handed to the card header.

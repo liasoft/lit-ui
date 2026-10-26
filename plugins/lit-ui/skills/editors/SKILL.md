@@ -31,7 +31,7 @@ Where the table and form families render *any* listing or *any* form, these are 
 | `line-numbers` | flag, default true | gutter is a pseudo-element, so selection copies code only |
 | `start-line`, `.highlightLines` | number / `number[]` | excerpts; called-out lines |
 | `wrap`, `wrap-toggle`, `max-height` | | default `max-height="24rem"` |
-| `copyable`, `download-name` | flag / string | empty name hides download |
+| `copyable` (default on; `="false"` hides), `download-name` | flag / string | empty name hides download |
 | `loading`, `no-header`, `no-card`, `.headerContent`, `.actions` | | `actions: ActionDescriptor[]` in the header |
 
 Events: `lia-code-download` `{name, text}`, `lia-code-wrap-change` `{wrap}`. Methods: `scrollToBottom()`, `scrollToLine(n)`, `download()`; getters `text`, `scrollElement`.
@@ -51,7 +51,7 @@ html`<lia-code-block language="ini" filename="service.conf" download-name="servi
 | `max-lines` | default 2000; newest kept, `0` = unbounded |
 | `follow` | tail; scrolling up turns it off, like a terminal |
 | `filter`, `.activeLevels`, `.levels` | seed text filter; drive severity from outside |
-| `timestamps`, `.timestampOptions`, `locale` | flag + `Intl.DateTimeFormat` options |
+| `timestamps` (default on; `="false"` hides), `.timestampOptions`, `locale` | flag + `Intl.DateTimeFormat` options |
 | `download-name` (default `log.txt`), `wrap`, `max-height` (26rem), `line-numbers`, `no-follow-toggle` | |
 
 Events: `lia-log-filter-change` `{text, levels}`, `lia-log-follow-change` `{follow}`. Getter `visibleLines`; helpers `guessLogLevel`, `toLogLine`, `highlightLogMatches`, `splitLines` are exported.
@@ -69,7 +69,7 @@ html`<lia-log-viewer .lines=${entries} follow download-name="service.log"
 | `original-label`, `modified-label` | column headings |
 | `mode` (`unified`\|`split`), `mode-toggle` | split needs ~2× width |
 | `context` (3), `collapse` (flag, true) | unchanged runs fold behind a gap marker |
-| `show-stats`, `copyable`, `wrap`, `wrap-toggle`, `line-numbers`, `max-height` (28rem), `no-header` | copy produces a unified patch body (`patchText`) |
+| `show-stats` and `copyable` (both default on; `="false"` hides), `wrap`, `wrap-toggle`, `line-numbers`, `max-height` (28rem), `no-header` | copy produces a unified patch body (`patchText`) |
 
 Event: `lia-diff-mode-change` `{mode}`. Getters `lines`, `stats`. Plain functions: `diffLines(a, b)` → `DiffLine[]` (`{type: 'equal'|'add'|'remove', text, left?, right?}`), `collapseDiff(lines, context)`, `pairDiff(rows)`, `diffStats(lines)`.
 

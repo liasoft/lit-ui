@@ -17,9 +17,10 @@ npm install @liasoft/lit-ui bootstrap
 
 ```ts
 import '@liasoft/lit-ui/styles.css';
-import { initTheme } from '@liasoft/lit-ui';
+import { initTheme, installConfirmHandler } from '@liasoft/lit-ui';
 
 initTheme();
+const uninstallConfirm = installConfirmHandler(); // call on app teardown
 ```
 
 Import the whole kit, or just the families you need:
@@ -57,9 +58,20 @@ working in your repo loads exactly the component knowledge it needs — nothing 
 After that, asking Claude Code to "add a members listing with row actions" makes it
 reach for `TableListing` and `lia-data-table` the way this README would.
 
+The same skills ship in the npm package, matching the installed version, under
+`node_modules/@liasoft/lit-ui/plugins/lit-ui/skills/`. Point other agents (Codex,
+Copilot) at `overview/SKILL.md` there, for example from your `AGENTS.md`.
+
+## What changed
+
+[CHANGELOG.md](CHANGELOG.md) lists every release: new components and options, fixes,
+and what to change when you upgrade.
+
 ---
 
 ## A complete page
+
+For a routed app, start with the [complete shell and page recipe](plugins/lit-ui/skills/layout/SKILL.md#compose-a-routed-application). Extend `LiaTransparentElement` for app/view wrappers, let `lia-page` own the heading and gutter, and use `lia-card` for titled sections. Set the shell’s `content-class=""` when a router view or error boundary wraps the page.
 
 ```ts
 import { html, render } from 'lit';
@@ -70,12 +82,13 @@ render(html`
     brand-label="Orbit Console"
     .navItems=${nav}
     .user=${{ loginname: 'amara', isAdmin: true }}
-    search-enabled
+    .searchEnabled=${false}
   >
-    <lia-page title="Members" icon="fa-solid fa-users"
+    <lia-page .title=${'Members'} icon="fa-solid fa-users"
       .actions=${[{ id: 'add', label: 'Invite a member', icon: 'fa-solid fa-plus',
                     variant: 'primary' }]}
     >
+      <lia-card .title=${'Members'} icon="fa-solid fa-users" .content=${html`
       <lia-data-table
         listing-id="members"
         .columns=${[
@@ -91,15 +104,16 @@ render(html`
             confirm: { message: `Delete ${row.name}?` } },
         ]}
         @lia-action=${(e) => console.log(e.detail.action.id, e.detail.row)}
-      ></lia-data-table>
+      ></lia-data-table>`}></lia-card>
     </lia-page>
   </lia-app-shell>
 `, document.querySelector('#app'));
 ```
 
-That is the whole page: sidebar, navbar with global search, heading bar with a toolbar,
-sortable and selectable table with bulk actions, per-row confirm dialogs, pagination,
-column manager and search.
+This composes the sidebar, navbar, heading toolbar and attached table with pagination,
+column manager and search. Supply `nav`, `members` and your action handlers; install
+the confirmation handler from the setup above for styled per-row dialogs. Enable
+global search only when the app handles `lia-search` and supplies results.
 
 ---
 

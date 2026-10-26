@@ -17,7 +17,7 @@ These are the blocks every other family composes. Prefer them over hand-rolled B
 - Copy-to-clipboard → `lia-copy-button`. Identifier that explains itself on hover → `lia-lookup`.
 - Hot paths (table cells, hundreds of rows): use the inline helpers `renderIcon()`, `renderBadge()`, `renderAction()`/`renderActions()`, `renderSpinner()` instead of instantiating elements.
 
-Actions with `confirm:` compose with the feedback family's `lia-confirm-dialog`; without one on the page, the browser's native `confirm()` is the fallback.
+Actions with `confirm:` open the feedback family's `lia-confirm-dialog` once `installConfirmHandler()` is installed at the app root; without it, the browser's native `confirm()` is the fallback.
 
 ## Setup
 
@@ -25,7 +25,7 @@ Actions with `confirm:` compose with the feedback family's `lia-confirm-dialog`;
 
 ## ActionDescriptor — the shared contract
 
-Every action button in the kit is data: `{ id, label, icon, href, target, title, variant, size, visible, disabled, confirm, modal, labelResponsive, back, data }` (all optional; `visible !== false` shows). `href` renders an `<a role="button">` and navigates; `modal: { id, title, ... }` wires `data-bs-toggle="modal"` (no event fires); `back: true` steps history back. Triggering emits a **cancelable** `lia-action` (`detail: { action, id, row, index }` — cancel it to suppress navigation). With `confirm: { message, title?, confirmLabel?, cancelLabel?, variant? }`, a cancelable `lia-action-confirm-request` fires first (`detail` adds `confirm`, `accept()`, `cancel()`); a confirm dialog claims it via `preventDefault()`, else native `confirm()` runs. `renderAction(action, { host, size, variant, row, index, loading })` and `renderActions([...])` emit this markup inline.
+Every action button in the kit is data: `{ id, label, icon, href, target, title, variant, size, visible, disabled, confirm, modal, labelResponsive, back, data }` (all optional; `visible !== false` shows). `href` renders an `<a role="button">` and navigates; `modal: { id, title, ... }` wires `data-bs-toggle="modal"` (no event fires); `back: true` steps history back. Triggering emits a **cancelable** `lia-action` (`detail: { action, id, row, index }` — cancel it to suppress navigation). With `confirm: { message, title?, confirmLabel?, cancelLabel?, variant? }`, a cancelable `lia-action-confirm-request` fires first (`detail` adds `confirm`, `accept()`, `cancel()`); `installConfirmHandler()` claims it via `preventDefault()` and opens `lia-confirm-dialog`, else native `confirm()` runs. `renderAction(action, { host, size, variant, row, index, loading })` and `renderActions([...])` emit this markup inline.
 
 ## Component reference
 
@@ -40,7 +40,7 @@ html`<lia-button .action=${{ id: 'delete', icon: 'fa-solid fa-trash', title: 'De
 ```
 
 ### `lia-action-bar` — toolbar of descriptors
-Props: `.actions: ActionDescriptor[]`, `align` (`start|center|end|between`), `size`, `variant` (fallbacks; default `outline-primary`), `gap` (0–5), `label-responsive` (default **true**: labels hide below `lg`), `label`, `.row`, `.index`. Renders buttons inline — the bar is the single `lia-action` source.
+Props: `.actions: ActionDescriptor[]`, `align` (`start|center|end|between`), `size`, `variant` (fallbacks; default `outline-primary`), `gap` (0–5), `label-responsive` (default **true**: labels hide below `lg` and become the accessible name; `label-responsive="false"` turns it off), `label`, `.row`, `.index`. Renders buttons inline — the bar is the single `lia-action` source.
 
 ```ts
 html`<lia-action-bar align="end"
@@ -69,7 +69,7 @@ html`<lia-progress thin percent=${usagePercent(used, total)} variant=${usageVari
 Props: `title` (prefer `.title=${…}` — the attribute doubles as a native tooltip), `subtitle`, `icon`, `variant` (tints header + border), `no-body` (for flush list-groups/tables), `.headerActions` / `.footerActions` (`ActionDescriptor[]`, emit `lia-action`), `.content` / `.footer` (renderable values), `.headerTools` (controls handed up by a child rendering as the body), `card-class`, `body-class`, `deactivated`. Light-DOM children are lifted into the body, so both `.content` and children work.
 
 ```html
-<lia-card title="System details" icon="fa-solid fa-gears" no-body>
+<lia-card .title=${'System details'} icon="fa-solid fa-gears" no-body>
   <ul class="list-group list-group-flush">
     <lia-key-value label="Hostname" value="node-01"></lia-key-value>
   </ul>
@@ -115,7 +115,7 @@ html`<lia-lookup label=${row.application} heading="Application"
 ## Patterns and pitfalls
 
 - **One event to rule actions**: listen for `lia-action` once on a container; switch on `detail.id`. Cancel the event to stop an `href` action's navigation. `modal` actions fire no event at all — Bootstrap handles them.
-- **Confirm flow degrades safely**: no `lia-confirm-dialog` on the page → native `window.confirm`. Never build your own confirmation around a button; put `confirm:` on the descriptor.
+- **Confirm flow degrades safely**: without `installConfirmHandler()` → native `window.confirm`. Never build your own confirmation around a button; put `confirm:` on the descriptor.
 - **Inline helpers on hot paths**: table cells should call `renderAction`/`renderBadge`/`renderIcon`, not stamp custom elements per row. Pass `{ host: this, row, index }` so listeners get a stable target and row context.
 - **`title` attribute gotchas**: on `lia-card`/`lia-empty-state`, a static `title="…"` attribute also produces a native browser tooltip on the host — prefer `.title=${…}` bindings.
 - **`variant` on `lia-progress`** interoperates with `usageVariant()` from core utils (`bg-*` accepted verbatim).
