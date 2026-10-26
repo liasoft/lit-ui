@@ -133,8 +133,14 @@ export class LiaNavbar extends LiaElement {
     this.slotted.pause();
   }
 
-  protected override updated(_changed: PropertyValues): void {
+  protected override updated(changed: PropertyValues): void {
     this.slotted.resume();
+    // The search row only exists while search is enabled.
+    if (changed.has('searchEnabled') && changed.get('searchEnabled') !== undefined) {
+      this.collapse?.dispose();
+      this.collapse = undefined;
+      this.initPlugins();
+    }
   }
 
   protected override firstUpdated(): void {
@@ -268,7 +274,11 @@ export class LiaNavbar extends LiaElement {
 
         ${this.renderBrand()}
 
-        <div class="order-0 order-md-1 d-flex flex-grow-0 flex-md-grow-auto">
+        <div
+          class="order-0 order-md-1 d-flex ${this.searchEnabled
+            ? 'flex-grow-0'
+            : 'flex-grow-1 justify-content-end'}"
+        >
           <ul class="navbar-nav ms-md-auto me-3 me-lg-5 align-items-center">
             ${this.searchEnabled
               ? html`<li class="nav-item d-md-none">
@@ -303,22 +313,21 @@ export class LiaNavbar extends LiaElement {
           </ul>
         </div>
 
-        <div
-          class="order-1 order-md-0 collapse navbar-collapse lia-collapse-search"
-          id="${this.ids.search}"
-          ?hidden="${!this.searchEnabled}"
-        >
-          ${this.searchEnabled
-            ? html`<lia-global-search
+        ${this.searchEnabled
+          ? html`<div
+              class="order-1 order-md-0 collapse navbar-collapse lia-collapse-search"
+              id="${this.ids.search}"
+            >
+              <lia-global-search
                 class="ms-3 mt-3 ms-lg-5 my-md-0 w-100"
                 placeholder="${this.searchPlaceholder}"
                 label="${this.searchPlaceholder}"
                 .results="${this.searchResults}"
                 ?loading="${this.searchLoading}"
                 error="${this.searchError}"
-              ></lia-global-search>`
-            : nothing}
-        </div>
+              ></lia-global-search>
+            </div>`
+          : nothing}
       </div>
     </nav>`;
   }
