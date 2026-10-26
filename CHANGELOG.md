@@ -15,6 +15,13 @@
 * **skills:** add a complete routed application recipe to the layout skill ([1b3b6ed](https://github.com/liasoft/lit-ui/commit/1b3b6edebe146511cf6f82e19a61ac6a57b7479a))
 * **skills:** correct the confirm, data-table, settings, dashboard and editors skills against the component sources ([1b3b6ed](https://github.com/liasoft/lit-ui/commit/1b3b6edebe146511cf6f82e19a61ac6a57b7479a))
 
+
+### Upgrading
+
+* Without search, `lia-navbar` no longer renders the `.lia-collapse-search` row, and the controls block grows to fill the bar. Remove app CSS that hid that row or forced `flex-grow` on the controls block.
+* Responsive action labels now carry their own accessible name, so `title: label` on responsive descriptors is no longer needed for that.
+* Agents other than Claude Code can read the skills from `node_modules/@liasoft/lit-ui/plugins/lit-ui/skills/`; start with `overview/SKILL.md`.
+
 ## [0.1.3](https://github.com/liasoft/lit-ui/compare/v0.1.2...v0.1.3) (2026-08-13)
 
 
