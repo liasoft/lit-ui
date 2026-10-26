@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.0](https://github.com/liasoft/lit-ui/compare/v0.1.3...v0.2.0) (2026-10-26)
+
+
+### Features
+
+* ship the agent skills in the npm package under plugins/lit-ui/skills, matching the installed version ([1b3b6ed](https://github.com/liasoft/lit-ui/commit/1b3b6edebe146511cf6f82e19a61ac6a57b7479a))
+
+
+### Bug Fixes
+
+* **actions:** label-responsive="false" now works on lia-action-bar, and a label hidden below lg stays the accessible name ([1b3b6ed](https://github.com/liasoft/lit-ui/commit/1b3b6edebe146511cf6f82e19a61ac6a57b7479a))
+* **navbar:** keep the account controls in place when search is disabled ([1b3b6ed](https://github.com/liasoft/lit-ui/commit/1b3b6edebe146511cf6f82e19a61ac6a57b7479a))
+* **skills:** add a complete routed application recipe to the layout skill ([1b3b6ed](https://github.com/liasoft/lit-ui/commit/1b3b6edebe146511cf6f82e19a61ac6a57b7479a))
+* **skills:** correct the confirm, data-table, settings, dashboard and editors skills against the component sources ([1b3b6ed](https://github.com/liasoft/lit-ui/commit/1b3b6edebe146511cf6f82e19a61ac6a57b7479a))
+
 ## [0.1.3](https://github.com/liasoft/lit-ui/compare/v0.1.2...v0.1.3) (2026-08-13)
 
 
